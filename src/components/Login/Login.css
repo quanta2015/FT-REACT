@@ -1,0 +1,43 @@
+.g-login {
+	margin: 60px auto;
+	width: 400px;
+	background: #fff;
+	border: 1px solid #ccc;
+	padding: 10px;
+}
+
+.g-login .row {
+	margin: 15px;
+}
+
+.g-login .row input {
+	height: 32px;
+	line-height: 28px \9;
+	width: 100%;
+	overflow: hidden;
+	box-sizing: border-box;
+	padding: 5px 10px;
+	background: #fff;
+	font-size: 14px;
+	box-shadow: 0 2px 5px -1px #d9d9d9;
+	border: 1px solid #d9d9d9;
+}
+
+.g-login .row button {
+	width: 100%;
+	background-color: #ff6600;
+	border: none;
+	color: #fff;
+	cursor: pointer;
+	height: 36px;
+	font-size: 16px;
+	padding: 0 8px;
+	text-align: center;
+	outline: none;
+	box-shadow: 2px 2px 5px #ccc;
+}
+
+input::-webkit-input-placeholder {
+	color: #ccc;
+	font-size: 14px;
+}
