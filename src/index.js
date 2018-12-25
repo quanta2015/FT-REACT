@@ -12,16 +12,16 @@ import './css/index.css';
 import './css/github.css';
 
 
-// const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ;
-// const store = createStore(
-//   reducer,
-//   composeEnhancer(applyMiddleware(async))
-// );
-
+const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ;
 const store = createStore(
   reducer,
-  applyMiddleware(async)
+  composeEnhancer(applyMiddleware(async))
 );
+
+// const store = createStore(
+//   reducer,
+//   applyMiddleware(async)
+// );
 
 render(
   <Provider store={store}>

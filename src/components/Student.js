@@ -14,7 +14,21 @@ class Student extends Component {
     super(props);
 
     //初始化默认用户sys
-    this.state = {st:null, cur:'sys', isEdit: false};
+    this.state = {
+      st:null, 
+      cur:'sys', 
+      isEdit: false, 
+      mdDetail: this.props.mdDetail
+    };
+  }
+
+  //同步state和props的mdDetail
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.mdDetail !== this.props.mdDetail) {
+      this.setState({
+        mdDetail: nextProps.mdDetail
+      });
+    }
   }
 
   componentDidMount = () =>{
@@ -81,13 +95,15 @@ class Student extends Component {
     this.props.saveMDDetail(id,_cur_file_name,md);
   }
 
+  onChange = e => this.setState({ mdDetail: e.target.value })
+
   render() {
     let stImg = "#";
     let tech = [];
     let stList = db.student;
     let hostPre = conf.host + 'img/';
-    let { student,isEdit } = this.state;
-    let { noteList,noteDetail,isLogin,mdDetail } = this.props;
+    let { student,isEdit,mdDetail } = this.state;
+    let { noteList,noteDetail,isLogin } = this.props;
 
     if ((typeof(noteList)==='undefined')) {
       noteList = [];
@@ -130,7 +146,7 @@ class Student extends Component {
             <button className={isEdit?'fn-hide':''}>Delete Note</button>
             <button onClick={this.doLogout} className={isEdit?'fn-hide':''}>Logo Out</button>
           </div>):''}
-          
+           
         </div>
         <div className="m-list">
           <div className="m-notelist">
@@ -149,7 +165,7 @@ class Student extends Component {
             <div className="m-md-body" dangerouslySetInnerHTML = {{ __html:noteDetail }}></div>
           ):(
             <div className="m-edit-body">
-              <textarea defaultValue={mdDetail}></textarea>
+              <textarea value={this.state.mdDetail} onChange={this.onChange} ></textarea>
             </div>
           )}
         </div>
