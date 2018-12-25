@@ -55,3 +55,19 @@ export function uploadFile(file,id) {
 }
 
 
+export function fetchMDDetail(id,name) {
+  const response = axios.get(conf.host + 'getMDDetail', {params:{id: id, name:name}});
+  return {
+    type: 'get_md_detail',
+    payload: response
+  }
+}
+
+export function saveMD(id,name,md) {
+  const response = axios.post(conf.host + 'saveMDDetail', {id:id,name:name,md: md});
+  return {
+    type: 'save_md_detail',
+    payload: response
+  }
+}
+

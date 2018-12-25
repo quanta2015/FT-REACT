@@ -54,6 +54,15 @@ router.get('/getNoteDetail', function(req, res, next) {
   res.send( JSON.stringify(htmlData) );
 });
 
+router.get('/getMDDetail', function(req, res, next) {
+  var params = url.parse(req.url, true).query;
+  var id = params.id;
+  var name = params.name;
+  var filename =  `${__dirname}/note/${id}/${name}`;
+  var markData = fs.readFileSync(filename,'utf-8').replace(/\[slide\]/g,"");
+  res.send( JSON.stringify(markData) );
+});
+
 router.get('/getNoteList', function(req, res, next) {
   var params = url.parse(req.url, true).query;
   var id = params.id;
@@ -128,6 +137,19 @@ router.post('/uploadFile', upload.single('file'), function(req, res, next) {
   res.send(JSON.stringify(ret));
 });
 
+router.post('/saveMDDetail', function(req, res, next) {
+  let md = req.body.md;
+  let id = req.body.id;
+  let name = req.body.name;
+
+  var filename =  `${__dirname}/note/${id}/${name}`;
+
+  fs.writeFile(filename, md, function (err) {
+    if (err) console.error(err);
+    var ret = { msg: `文件保存成功！` };
+    res.send(JSON.stringify(ret));
+  });
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

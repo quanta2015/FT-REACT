@@ -18,9 +18,14 @@ const reducer = ( state = {}, action) => {
       return {...state, login:null, isLogin: false, loading: false};
     case 'do_uploadfile':
       const file = JSON.parse(JSON.stringify(action.payload.data));
-
       toastIt(file.msg)
       return {...state, file: file, loading: false};
+    case 'get_md_detail':
+      const mdDetail = JSON.parse(JSON.stringify(action.payload.data));
+      return {...state, mdDetail:mdDetail, loading: false};
+    case 'save_md_detail':
+      toastIt(action.payload.data.msg)
+      return {...state, loading: false};
     default:
       return state;
   }
