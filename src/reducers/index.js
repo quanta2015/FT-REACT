@@ -27,8 +27,11 @@ const reducer = ( state = {}, action) => {
       toastIt(action.payload.data.msg)
       return {...state, loading: false};
     case 'get_mooc_list':
-    const moocList = JSON.parse(JSON.stringify(action.payload.data));
+      const moocList = JSON.parse(JSON.stringify(action.payload.data));
       return {...state, moocList:moocList, loading: false};
+    case 'get_mooc_detail':
+      const moocDetail = JSON.parse(JSON.stringify(action.payload.data));
+      return {...state, moocDetail:moocDetail, loading: false};
     default:
       return state;
   }

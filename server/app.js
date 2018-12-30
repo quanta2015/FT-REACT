@@ -79,7 +79,14 @@ router.get('/getNoteList', function(req, res, next) {
   })
 });
 
-
+router.get('/getMoocDetail', function(req, res, next) {
+  var params = url.parse(req.url, true).query;
+  var mpath = params.mpath;
+  var filename =  `${__dirname}/mooc/${mpath}.md`;
+  var markData = fs.readFileSync(filename,'utf-8').replace(/\[slide\]/g,"");
+  var htmlData = marked(markData);
+  res.send( JSON.stringify(htmlData) );
+});
 
 router.get('/getMoocList', function(req, res, next) {
   var ret = [];

@@ -69,10 +69,18 @@ export function saveMD(id,name,md) {
   }
 }
 
-export function fetchMoocList(id) {
+export function fetchMoocList() {
   const response = axios.get(conf.host + 'getMoocList');
   return {
     type: 'get_mooc_list',
+    payload: response
+  }
+}
+
+export function fetchMoocDetail(mpath) {
+  const response = axios.get(conf.host + 'getMoocDetail', {params:{mpath: mpath}} );
+  return {
+    type: 'get_mooc_detail',
     payload: response
   }
 }
