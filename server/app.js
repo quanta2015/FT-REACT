@@ -69,8 +69,6 @@ router.get('/getNoteList', function(req, res, next) {
   var ret = [];
   var path = `${__dirname}/note/${id}/`;
 
-  console.log(path)
-
   fs.readdir(path ,function(err,files){
     files.forEach(v=>{
       if (v.split('.')[1] === 'md') {
@@ -79,6 +77,41 @@ router.get('/getNoteList', function(req, res, next) {
     })
     res.send(JSON.stringify(ret));
   })
+});
+
+
+
+router.get('/getMoocList', function(req, res, next) {
+  var ret = [];
+  var path = `${__dirname}/mooc/`;
+
+  const files = fs.readdirSync(path);
+  files.forEach(function (mooc, index) {
+    let moocpath = `${path}${mooc}`;
+    let stat = fs.lstatSync(moocpath);
+    if (stat.isDirectory() === true) { 
+      let mooclList = []
+      const moocfiles = fs.readdirSync(moocpath);
+      moocfiles.forEach(function (moocChap, index) {
+        let moocChapPath = `${path}${mooc}/${moocChap}`;
+        let stat = fs.lstatSync(moocChapPath);
+        if (stat.isDirectory() === true) { 
+          let cntList = [];
+          const moocItemFile = fs.readdirSync(moocChapPath);
+          moocItemFile.forEach(function (moocItem, index) {
+            let moocItemPath = `${path}${mooc}/${moocChap}/${moocItem}`;
+            let stat = fs.lstatSync(moocItemPath);
+            if (stat.isFile() === true) { 
+              cntList.push(moocItem.split('.')[0]);
+            }
+          })
+          mooclList.push({chap:moocChap,list:cntList})
+        }
+      })
+      ret.push({mooc:mooc,list:mooclList})
+    }
+  })
+  res.send(JSON.stringify(ret));
 });
 
 router.get('/doLogin', function(req, res, next) {

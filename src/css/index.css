@@ -536,7 +536,9 @@ code {
   margin: 0 0 10px 0;
   background: #fff;
   padding: 5px 10px;
+  transition: .5s;
 }
+
 
 .g-st .m-noteitem span {
   color: #c00;
@@ -562,4 +564,100 @@ code {
 
 .g-st .fn-active {
   border-right: 5px solid #ff6600;
+}
+
+.g-mooc {
+  padding: 0 0 10px 0;
+  background: #aaa;
+}
+
+.g-mooc .m-mooc-menu {
+  height: 30px;
+  background: #aaa;
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+}
+
+.g-mooc .m-mooc-item {
+  margin: 5px 1px 0 0;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #333;
+  position: relative;
+  transition: .9s;
+}
+
+.g-mooc .m-mooc-item:hover {
+  background: #ff6600;
+  cursor: pointer;
+}
+
+.g-mooc .m-mooc-item:first-child {
+  margin-left: 10px;
+}
+.g-mooc .m-mooc-item:last-child {
+  margin-right: 10px;
+}
+
+.g-mooc .m-mooc-item:before {
+  content: ' ';
+  width: 0;
+  height: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  border: 8px solid #aaa;
+  border-bottom: 8px solid transparent;
+  border-left: 8px solid transparent;
+}
+
+.g-mooc .m-mooc-cnt {
+  min-height: calc( 100vh - 118px );
+  border-top: 5px solid #aaa;
+  background: #aaa;
+  display: flex;
+  flex-direction: row;
+}
+
+.g-mooc .m-mooc-bar {
+  margin-left: 10px;
+  width: 200px;
+  background: #666;
+  padding: 1px;
+}
+
+.g-mooc .m-mooc-chap {
+  display: flex;
+  flex-direction: column;
+  border-bottom: 1px solid #ccc;
+}
+
+.g-mooc .m-bar-item {
+  padding: 5px;
+  background: #fff;
+  border-bottom: 1px dashed #ccc;
+}
+
+.g-mooc .m-mooc-chap label{
+  background: #666!important;
+  color: #fff;
+}
+
+.g-mooc .m-mooc-chap span{
+  padding-left: 20px; 
+}
+
+.g-mooc .m-bar-item:first-child, .g-mooc .m-bar-item:last-child {
+  border: none;
+}
+
+.g-mooc .m-mooc-main {
+  margin: 0 5px 0 5px;
+  border: 1px solid #ccc;
+  flex: 1;
+  padding: 5px 10px;
+  background: #fff;
 }

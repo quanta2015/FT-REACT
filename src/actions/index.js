@@ -1,8 +1,6 @@
 import axios from 'axios';
 import conf from '../config';
 
-
-
 export function fetchUser() {
   const response = axios.get(conf.host + 'getUser');
   return {
@@ -71,3 +69,10 @@ export function saveMD(id,name,md) {
   }
 }
 
+export function fetchMoocList(id) {
+  const response = axios.get(conf.host + 'getMoocList');
+  return {
+    type: 'get_mooc_list',
+    payload: response
+  }
+}

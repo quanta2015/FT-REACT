@@ -5,8 +5,10 @@ import $ from 'jquery';
 import { fetchNoteList, fetchNoteDetail, doLogout, uploadFile, fetchMDDetail,saveMD } from '../actions';
 import conf from '../config';
 import {toastIt} from '../components/Toastr/toastr';
+import { Pagination } from 'antd';
 
 var _cur_file_name;
+const PAGE_SIZE = 10;
 
 class Student extends Component {
 
@@ -17,6 +19,7 @@ class Student extends Component {
     this.state = {
       st:null, 
       cur:'sys', 
+      index: 1,
       isEdit: false, 
       mdDetail: this.props.mdDetail
     };
@@ -97,16 +100,33 @@ class Student extends Component {
 
   onChange = e => this.setState({ mdDetail: e.target.value })
 
+
+  onChangePage = (e) => {
+    console.log(e)
+    this.setState({index: e});
+  }
+
   render() {
     let stImg = "#";
     let tech = [];
     let stList = db.student;
     let hostPre = conf.host + 'img/';
-    let { student,isEdit,mdDetail } = this.state;
+    let { student,isEdit,index } = this.state;
     let { noteList,noteDetail,isLogin } = this.props;
+    let total;
+    let data = [];
 
     if ((typeof(noteList)==='undefined')) {
       noteList = [];
+      total = 0;
+    }else{
+      total = noteList.length;
+      for(var i=0;i<PAGE_SIZE;i++) {
+        var offset = (index-1)*PAGE_SIZE;
+        if (offset + i>=noteList.length) break;
+        var item = noteList[i + offset];
+        data.push(item);
+      }
     }
     
     if ((student !== null)&&(typeof(student)!=='undefined')) {
@@ -150,15 +170,16 @@ class Student extends Component {
         </div>
         <div className="m-list">
           <div className="m-notelist">
-            {noteList.map((item,i)=>{
+            {data.map((item,i)=>{
               return(
                 <div className="m-noteitem" key={i} >
                   <span>{item.split('@')[0]}</span>
-                  <a href="#{i}"  data-id={i} onClick={this.noteClick}>{item.split('@')[1]}</a>
+                  <a href="#{i}"  data-id={i+(index-1)*PAGE_SIZE} onClick={this.noteClick}>{item.split('@')[1]}</a>
                 </div>
               )
             })}
           </div>
+          <Pagination size="small" onChange={this.onChangePage} total={total} defaultPageSize={PAGE_SIZE}/>
         </div>
         <div className="m-main">
           {!isEdit?(

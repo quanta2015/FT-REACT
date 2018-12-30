@@ -3,6 +3,7 @@ import {  Route,Link } from "react-router-dom";
 import { connect } from 'react-redux';
 import Home from "./components/Home";
 import Project from "./components/Project";
+import Mooc from "./components/Mooc";
 import Student from "./components/Student";
 import About from "./components/About";
 import Login from "./components/Login/Login";
@@ -39,6 +40,7 @@ class App extends Component {
         <Route exact path="/" component={Home} />
         <Route exact path="/login" component={Login} />
         <Route exact path="/project" component={Project} />
+        <Route exact path="/mooc" component={Mooc} />
         <Route exact path="/student" component={Student} />
         <Route exact path="/about" component={About} />
       </div>
