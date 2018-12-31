@@ -1,7 +1,8 @@
 import React, { Component }  from 'react';
 import { connect } from 'react-redux';
-import { fetchMoocList,fetchMoocDetail } from '../actions';
+import { fetchMoocList,fetchMoocDetail,setLoading } from '../actions';
 import $ from 'jquery';
+import { Spin } from 'antd'; 
 
 class Mooc extends Component {
 
@@ -18,7 +19,10 @@ class Mooc extends Component {
 
   selectMooc = (e) => {
     let id = $(e.currentTarget).data("id");
-    this.setState({index:id})
+    this.setState({index:id});
+
+    $('.m-mooc-item').removeClass('fn-active');
+    $(e.currentTarget).addClass('fn-active');
     console.log();
   }
 
@@ -35,7 +39,7 @@ class Mooc extends Component {
   }
 
   render() {  
-    let { moocList,moocDetail } = this.props;
+    let { moocList,moocDetail,loading } = this.props;
     let { index } = this.state;
     let chapList;
 
@@ -48,10 +52,13 @@ class Mooc extends Component {
 
     return (
       <div className="g-mooc">
+        {loading?<div className="loading"><Spin size="large" spinning={loading}/></div>:''}
+
+        
         <div className="m-mooc-menu">
           {moocList.map((item,i)=>{
             return(
-              <div className="m-mooc-item" key={i} data-id={i} onClick={this.selectMooc}>
+              <div className={(index===i)?`m-mooc-item fn-active`:`m-mooc-item`} key={i} data-id={i} onClick={this.selectMooc}>
                 <span>{item.mooc}</span>
               </div>
             )
@@ -74,7 +81,7 @@ class Mooc extends Component {
           })}
           </div>
           <div className="m-mooc-main">
-          <div className="m-md-body" dangerouslySetInnerHTML = {{ __html:moocDetail }}></div>
+          <div className="markdown-body" dangerouslySetInnerHTML = {{ __html:moocDetail }}></div>
           </div>
           
         </div>
@@ -88,6 +95,7 @@ class Mooc extends Component {
 const mapStateToProps  = (state) => ({
   moocList: state.moocList,
   moocDetail: state.moocDetail,
+  loading: state.loading,
 });
 
 const mapDispatchToProps = (dispatch) => {
@@ -96,6 +104,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch(fetchMoocList());
     },
     getMoocDetail: (mpath) => {
+      dispatch( setLoading() );
       dispatch(fetchMoocDetail(mpath));
     },
   }

@@ -84,3 +84,10 @@ export function fetchMoocDetail(mpath) {
     payload: response
   }
 }
+
+
+export function setLoading() {
+  return {
+    type: 'set_loading'
+  }
+}

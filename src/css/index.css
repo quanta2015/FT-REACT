@@ -2,6 +2,20 @@ html {
   min-width: 1200px;
 }
 
+.loading {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display:flex;
+  justify-content: center;
+  padding-top: 250px;
+  /* align-items: center; */
+  z-index: 100;
+  background: rgba(255,255,255,.8);
+}
+
 .fn-hide {
   display: none;
 }
@@ -569,6 +583,7 @@ code {
 .g-mooc {
   padding: 0 0 10px 0;
   background: #aaa;
+  position: relative;
 }
 
 .g-mooc .m-mooc-menu {
@@ -648,8 +663,14 @@ code {
 
 .g-mooc .m-mooc-chap span{
   padding-left: 20px; 
+  cursor: pointer;
+  transition: .2s;
 }
 
+.g-mooc .m-mooc-chap span:hover{
+  background: #eee;
+  border-right: 5px solid #ff6600;
+}
 .g-mooc .m-bar-item:first-child, .g-mooc .m-bar-item:last-child {
   border: none;
 }
@@ -660,4 +681,9 @@ code {
   flex: 1;
   padding: 5px 10px;
   background: #fff;
+}
+
+
+.g-mooc .fn-active {
+  background: #0c6;
 }
