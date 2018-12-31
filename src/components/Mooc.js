@@ -20,10 +20,6 @@ class Mooc extends Component {
   selectMooc = (e) => {
     let id = $(e.currentTarget).data("id");
     this.setState({index:id});
-
-    $('.m-mooc-item').removeClass('fn-active');
-    $(e.currentTarget).addClass('fn-active');
-    console.log();
   }
 
   showMooc= (e) => {
@@ -36,6 +32,12 @@ class Mooc extends Component {
     let itemName = moocList[moocId].list[cid].list[lid];
     let mp = `${moocName}/${chapName}/${itemName}`
     this.props.getMoocDetail(mp);
+  }
+
+  slideMooc=(e)=>{
+    let sl = $(e.currentTarget);
+    let show = sl.data('show');
+    (show)?sl.data("show",false).nextAll().hide():sl.data("show",true).nextAll().show();
   }
 
   render() {  
@@ -53,8 +55,6 @@ class Mooc extends Component {
     return (
       <div className="g-mooc">
         {loading?<div className="loading"><Spin size="large" spinning={loading}/></div>:''}
-
-        
         <div className="m-mooc-menu">
           {moocList.map((item,i)=>{
             return(
@@ -70,10 +70,10 @@ class Mooc extends Component {
           {chapList.map((chap,i)=>{
             return(
               <div className="m-mooc-chap"  key={i}>
-                <label className="m-bar-item">{chap.chap}</label>
+                <label className="m-bar-item" data-show="false" onClick={this.slideMooc}>{chap.chap} <i>{chap.list.length}</i> </label>
                 {chap.list.map((v,j)=>{
                   return(
-                    <span className="m-bar-item" key={j} data-cid={i} data-lid={j} onClick={this.showMooc}>{v}</span>
+                    <span className="m-bar-item fn-hide" key={j} data-cid={i} data-lid={j} onClick={this.showMooc}>{v}</span>
                   )
                 })}
               </div>
