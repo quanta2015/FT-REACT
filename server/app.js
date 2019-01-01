@@ -191,6 +191,18 @@ router.post('/saveMDDetail', function(req, res, next) {
   });
 });
 
+router.get('/getCount', function(req, res, next) {
+  var filename =  `${__dirname}/count`;
+
+  var count = fs.readFileSync(filename,'utf-8');
+  count++;
+  fs.writeFile(filename, count, function (err) {
+    if (err) console.error(err);
+    res.send(JSON.stringify( count ));
+  });
+});
+
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

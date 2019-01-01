@@ -7,15 +7,20 @@ import Mooc from "./components/Mooc";
 import Student from "./components/Student";
 import About from "./components/About";
 import Login from "./components/Login/Login";
-import { withRouter } from 'react-router'
+import { withRouter } from 'react-router';
+import { fetchCount } from './actions';
 
 import logob from './img/logob.svg';
 import logoc from './img/logoc.svg'
 
 class App extends Component {
 
+  componentDidMount = () =>{
+    this.props.getCount();
+  }
+
   render() {
-    let { isLogin } = this.props;
+    let { isLogin,count } = this.props;
 
     return (
       <div className="App">
@@ -23,11 +28,12 @@ class App extends Component {
           <div className="m-logo">
             <Link to="/Login"> 
             {isLogin?<img src={logoc}  alt=""/>:<img src={logob}  alt=""/>}
-            
             </Link>
             <label>F</label>
             <span>ront-Tech</span>
+            
           </div>
+          <div className="m-count"><span>{count}</span></div>
           <div className="m-menu">
             <Link to="/">Home</Link>
             <Link to="/project">Project</Link>
@@ -49,7 +55,16 @@ class App extends Component {
 }
 
 const mapStateToProps  = (state) => ({
-  isLogin: state.isLogin
+  isLogin: state.isLogin,
+  count: state.count,
 });
 
-export default withRouter(connect(mapStateToProps)(App));
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getCount: () => {
+      dispatch(fetchCount());
+    }
+  }
+}
+
+export default withRouter(connect(mapStateToProps,mapDispatchToProps)(App));

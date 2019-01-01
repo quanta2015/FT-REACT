@@ -34,6 +34,9 @@ const reducer = ( state = {}, action) => {
       return {...state, moocDetail:moocDetail, loading: false};
     case 'set_loading':
       return {...state, moocDetail:null, noteDetail:null,loading: true};
+    case 'get_count':
+      const count = JSON.parse(JSON.stringify(action.payload.data));
+      return {...state, count:count, loading: false};
     default:
       return state;
   }

@@ -85,6 +85,14 @@ export function fetchMoocDetail(mpath) {
   }
 }
 
+export function fetchCount() {
+  const response = axios.get(conf.host + 'getCount');
+  return {
+    type: 'get_count',
+    payload: response
+  }
+}
+
 
 export function setLoading() {
   return {

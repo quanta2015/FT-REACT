@@ -20,6 +20,7 @@ class Mooc extends Component {
   selectMooc = (e) => {
     let id = $(e.currentTarget).data("id");
     this.setState({index:id});
+    $('.m-mooc-chap span').hide();
   }
 
   showMooc= (e) => {
@@ -101,6 +102,7 @@ const mapStateToProps  = (state) => ({
 const mapDispatchToProps = (dispatch) => {
   return {
     getMoocList: () => {
+      dispatch( setLoading() );
       dispatch(fetchMoocList());
     },
     getMoocDetail: (mpath) => {
