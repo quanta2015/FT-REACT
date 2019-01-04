@@ -121,6 +121,56 @@ router.get('/getMoocList', function(req, res, next) {
   res.send(JSON.stringify(ret));
 });
 
+router.get('/getProjectList', function(req, res, next) {
+  var ret = [];
+  var path = `${__dirname}/project/`;
+
+  const files = fs.readdirSync(path);
+  files.forEach(function (proj, index) {
+    let projPath = `${path}${proj}`;
+    let stat = fs.lstatSync(projPath);
+    if (stat.isDirectory() === true) { 
+      let jsonData;
+      const projFiles = fs.readdirSync(projPath);
+      projFiles.forEach(function (projInfo, index) {
+        let projInfoPath = `${path}${proj}/${projInfo}`;
+        let stat = fs.lstatSync(projInfoPath);
+        if (stat.isFile() === true) { 
+          // read json file's info
+          if (projInfoPath.split('.')[1] === 'json') {
+            let pname = proj.split('#')[1];
+            let date = proj.split('#')[0];
+            jsonData = JSON.parse(fs.readFileSync(projInfoPath,'utf-8'));
+            jsonData.pname = pname;
+            jsonData.date = date;
+          }
+        }
+      })
+      ret.push(jsonData);
+    }
+  })
+  res.send(JSON.stringify(ret));
+});
+
+router.get('/getProjectDetail', function(req, res, next) {
+  let params = url.parse(req.url, true).query;
+  let pid = params.pid;
+  let descFilename = `${__dirname}/project/${pid}/desc.md`;
+  let markData = fs.readFileSync(descFilename,'utf-8');
+  let htmlData = marked(markData);
+  let pname = pid.split('#')[1];
+  let date = pid.split('#')[0];
+
+  let baseFilename = `${__dirname}/project/${pid}/base.json`;
+  let jsonData = JSON.parse(fs.readFileSync(baseFilename,'utf-8'));
+  jsonData.desc = htmlData;
+  jsonData.pname = pname;
+  jsonData.date = date;
+  
+  res.send(JSON.stringify(jsonData));
+});
+
+
 router.get('/doLogin', function(req, res, next) {
   var params = url.parse(req.url, true).query;
   var usr = params.usr;
@@ -201,6 +251,14 @@ router.get('/getCount', function(req, res, next) {
     res.send(JSON.stringify( count ));
   });
 });
+
+
+
+
+
+
+
+
 
 
 // catch 404 and forward to error handler

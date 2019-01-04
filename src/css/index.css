@@ -2,6 +2,15 @@ html {
   min-width: 1200px;
 }
 
+a {
+  text-decoration: none;
+  color: #ff6600;
+}
+a:visited,a:active {
+  color: #ff6600;
+}
+
+
 .loading {
   position: absolute;
   top: 0;
@@ -277,6 +286,7 @@ code {
   color: #666;
   box-sizing: border-box;
   cursor: pointer;
+  overflow: hidden;
   transition: 0.7s;
 }
 .g-proj .m-proj-item:hover > .u-date {
@@ -318,8 +328,10 @@ code {
 
 .g-proj .m-proj-detail .m-proj-wrap{
   position: absolute;
-  width: 1000px;
-  height: 500px;
+  width: 800px;
+  /* height: 500px; */
+  /* overflow: scroll; */
+  font-size: 12px;
   top: 50%;
   left: 50%;
   background: #fff;
@@ -361,15 +373,27 @@ code {
 }
 
 
-.g-proj .m-detail-title {
+.g-proj .m-detail-info {
   background: #eee;
   padding: 10px 15px;
+}
+
+.g-proj .m-detail-info .m-title {
   font-size: 16px;
   color: #000;
 }
 
+.g-proj .m-detail-info .m-type {
+  float: right;
+  display: block;
+  background: #666;
+  color: #fff;
+  padding: 3px 15px;
+}
+
 .g-proj .m-detail-sub {
   padding: 10px 15px;
+  border-bottom: 1px dashed #eee;
 }
 
 .g-proj .m-detail-sub:after {
@@ -378,23 +402,38 @@ code {
   clear: both;
 }
 
-.g-proj .m-detail-date {
-  float: left;
+.g-proj .m-date {
+  float: right;
   color: #999;
 }
 
-.g-proj .m-detail-type {
-  float: right;
-  display: block;
-  background: #999;
+.g-proj .m-tech i {
+  display: inline-block;
+  background: #ff6600;
+  margin-right: 5px;
   color: #fff;
-  padding: 3px 15px;
+  padding: 2px 5px;
+}
+
+.g-proj .m-detail-link {
+  padding: 10px 15px 10px 15px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px dashed #eee;
+  font-size: 14px;
+}
+
+.g-proj .m-detail-link label{
+  margin: 0 0 0 10px;
 }
 
 .g-proj .m-detail-cnt {
-  padding: 0px 15px 10px 15px;
+  padding: 10px 15px 10px 15px;
 }
 
+.g-proj li,.g-proj p {
+  font-size: 13px;
+}
 
 .g-about {
   background: #333;
@@ -548,7 +587,7 @@ code {
   border-left: 5px solid #666;
 }
 
-.m-tech {
+.g-st .m-tech {
   display: inline-block;
   padding: 2px 5px;
   font-size: 12px;

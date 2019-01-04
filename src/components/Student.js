@@ -183,7 +183,7 @@ class Student extends Component {
         </div>
         <div className="m-main">
           {!isEdit?(
-            <div className="m-md-body" dangerouslySetInnerHTML = {{ __html:noteDetail }}></div>
+            <div className="markdown-body" dangerouslySetInnerHTML = {{ __html:noteDetail }}></div>
           ):(
             <div className="m-edit-body">
               <textarea value={this.state.mdDetail} onChange={this.onChange} ></textarea>

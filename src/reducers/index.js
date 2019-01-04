@@ -32,6 +32,12 @@ const reducer = ( state = {}, action) => {
     case 'get_mooc_detail':
       const moocDetail = JSON.parse(JSON.stringify(action.payload.data));
       return {...state, moocDetail:moocDetail, loading: false};
+    case 'get_project_list':
+      const projectList = JSON.parse(JSON.stringify(action.payload.data));
+      return {...state, projectList:projectList, loading: false};
+    case 'get_project_detail':
+      const projectDetail = JSON.parse(JSON.stringify(action.payload.data));
+      return {...state, projectDetail:projectDetail, loading: false};
     case 'set_loading':
       return {...state, moocDetail:null, noteDetail:null,loading: true};
     case 'get_count':

@@ -1,6 +1,7 @@
 import React, { Component }  from 'react';
 import { connect } from 'react-redux';
 import Footer from './Footer';
+import { fetchProjectList,setLoading } from '../actions';
 
 import db from '../data/data';
 
@@ -14,14 +15,20 @@ import conf from '../config';
 
 class Home extends Component {
 
-  componentDidMount = ()=>  {
-    // this.props.getEvalTask();
+  componentDidMount = () =>{
+    this.props.getProjectList();
   }
 
   render() {  
-    let data = db.project;
+    let {projectList}  = this.props;
+    projectList = (typeof(projectList)==='undefined')?[]:projectList;
+
+    //  projectList = db.project;
     let stList = db.student;
     let hostPre = conf.host + "img/";
+
+
+    console.log(projectList)
 
     return (
       <div className="g-home">
@@ -43,11 +50,11 @@ class Home extends Component {
           </div>
 
           <div className="m-proj">
-            {data.map((item,i)=>{
+            {projectList.map((item,i)=>{
               return(
                 <div className="m-proj-item" key={i}>
                 <span className="m-date">{item.date}</span>
-                <span>{item.name}</span>
+                <span>{item.pname}</span>
               </div>
               )
             })}
@@ -90,16 +97,22 @@ class Home extends Component {
   }
 }
 
+
+
+
 const mapStateToProps  = (state) => ({
   evaltask: state.evaltask,
   idx: state.idx, 
+  projectList: state.projectList,
+  loading: state.loading,
 });
 
 const mapDispatchToProps=(dispatch)=>{
   return {
-    getEvalTask:(e)=>{
-      // dispatch({type:'TO_GET_EVALTASK', data });
-    }
+    getProjectList: () => {
+      dispatch( setLoading() );
+      dispatch(fetchProjectList());
+    },
   }
 }
 

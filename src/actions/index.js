@@ -85,6 +85,21 @@ export function fetchMoocDetail(mpath) {
   }
 }
 
+export function fetchProjectList() {
+  const response = axios.get(conf.host + 'getProjectList');
+  return {
+    type: 'get_project_list',
+    payload: response
+  }
+}
+
+export function fetchProjectDetail(pid) {
+  const response = axios.get(conf.host + 'getProjectDetail',{params:{pid: pid}} );
+  return {
+    type: 'get_project_detail',
+    payload: response
+  }
+}
 export function fetchCount() {
   const response = axios.get(conf.host + 'getCount');
   return {
