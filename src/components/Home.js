@@ -22,8 +22,6 @@ class Home extends Component {
   render() {  
     let {projectList}  = this.props;
     projectList = (typeof(projectList)==='undefined')?[]:projectList;
-
-    //  projectList = db.project;
     let stList = db.student;
     let hostPre = conf.host + "img/";
 
@@ -50,10 +48,10 @@ class Home extends Component {
           </div>
 
           <div className="m-proj">
-            {projectList.map((item,i)=>{
+            {projectList.reverse().slice(0,10).map((item,i)=>{
               return(
                 <div className="m-proj-item" key={i}>
-                <span className="m-date">{item.date}</span>
+                <span className="m-date">{item.date} </span>
                 <span>{item.pname}</span>
               </div>
               )
@@ -96,9 +94,6 @@ class Home extends Component {
     )
   }
 }
-
-
-
 
 const mapStateToProps  = (state) => ({
   evaltask: state.evaltask,

@@ -2,10 +2,10 @@ import React, { Component }  from 'react';
 import { connect } from 'react-redux';
 import db from '../data/data';
 import $ from 'jquery';
-import { fetchNoteList, fetchNoteDetail, doLogout, uploadFile, fetchMDDetail,saveMD } from '../actions';
+import { fetchNoteList, fetchNoteDetail, doLogout, uploadFile, fetchMDDetail,saveMD,delMD,setLoading } from '../actions';
 import conf from '../config';
 import {toastIt} from '../components/Toastr/toastr';
-import { Pagination } from 'antd';
+import { Pagination,Spin } from 'antd';
 
 var _cur_file_name;
 const PAGE_SIZE = 10;
@@ -98,8 +98,13 @@ class Student extends Component {
     this.props.saveMDDetail(id,_cur_file_name,md);
   }
 
-  onChange = e => this.setState({ mdDetail: e.target.value })
+  //删除md数据
+  doDel = (e) => {
+    let id = this.state.cur;
+    this.props.delMDDetail(id,_cur_file_name);
+  }
 
+  onChange = e => this.setState({ mdDetail: e.target.value })
 
   onChangePage = (e) => {
     console.log(e)
@@ -112,7 +117,7 @@ class Student extends Component {
     let stList = db.student;
     let hostPre = conf.host + 'img/';
     let { student,isEdit,index } = this.state;
-    let { noteList,noteDetail,isLogin } = this.props;
+    let { noteList,noteDetail,isLogin,loading } = this.props;
     let total;
     let data = [];
 
@@ -144,6 +149,7 @@ class Student extends Component {
 
     return (
       <div className="g-st">
+        {loading?<div className="loading"><Spin size="large" spinning={loading}/></div>:''}
         <div className="m-bar">
           <div className="m-st-logo">
             <img src={hostPre+stImg} alt=""/>
@@ -163,7 +169,7 @@ class Student extends Component {
               <input type="file" onChange={this.doUpload}/>Upload Note</button>
             <button onClick={this.doEdit} className={isEdit?'fn-hide':''}>Edit Note</button>
             <button onClick={this.doSave} className={!isEdit?'fn-hide':''}>Save Note</button>
-            <button className={isEdit?'fn-hide':''}>Delete Note</button>
+            <button onClick={this.doDel} className={isEdit?'fn-hide':''}>Delete Note</button>
             <button onClick={this.doLogout} className={isEdit?'fn-hide':''}>Logo Out</button>
           </div>):''}
            
@@ -211,28 +217,39 @@ const mapStateToProps  = (state) => ({
   isLogin: state.isLogin,
   login: state.login,
   file: state.file,
-  mdDetail: state.mdDetail
+  mdDetail: state.mdDetail,
+  loading: state.loading,
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
     getNoteList: (id) => {
+      dispatch( setLoading() );
       dispatch(fetchNoteList(id));
     },
     getNoteDetail: (id,name) => {
+      dispatch( setLoading() );
       dispatch(fetchNoteDetail(id,name));
     },
     doLogout: ()=> {
+      dispatch( setLoading() );
       dispatch(doLogout());
     },
     uploadFile: (file,id) => {
+      dispatch( setLoading() );
       dispatch(uploadFile(file,id));
     },
     getMDDetail: (id,name) => {
+      dispatch( setLoading() );
       dispatch(fetchMDDetail(id,name));
     },
     saveMDDetail: (id,name,md) => {
+      dispatch( setLoading() );
       dispatch(saveMD(id,name,md));
+    },
+    delMDDetail: (id,name) => {
+      dispatch( setLoading() );
+      dispatch(delMD(id,name));
     },
   }
 }

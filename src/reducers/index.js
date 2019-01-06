@@ -19,13 +19,16 @@ const reducer = ( state = {}, action) => {
     case 'do_uploadfile':
       const file = JSON.parse(JSON.stringify(action.payload.data));
       toastIt(file.msg)
-      return {...state, file: file, loading: false};
+      return {...state, file: file, noteList:action.payload.data.noteList ,loading: false};
     case 'get_md_detail':
       const mdDetail = JSON.parse(JSON.stringify(action.payload.data));
       return {...state, mdDetail:mdDetail, loading: false};
     case 'save_md_detail':
       toastIt(action.payload.data.msg)
       return {...state, loading: false};
+    case 'del_md_detail':
+      toastIt(action.payload.data.msg);
+      return {...state, noteList:action.payload.data.noteList ,loading: false};
     case 'get_mooc_list':
       const moocList = JSON.parse(JSON.stringify(action.payload.data));
       return {...state, moocList:moocList, loading: false};

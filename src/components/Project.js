@@ -1,7 +1,6 @@
 import React, { Component }  from 'react';
 import { connect } from 'react-redux';
 import { fetchProjectList,fetchProjectDetail,setLoading } from '../actions';
-import db from '../data/data';
 import { Spin } from 'antd'; 
 import $ from 'jquery';
 

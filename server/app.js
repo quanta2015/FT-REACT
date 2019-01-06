@@ -221,10 +221,18 @@ var storage = multer.diskStorage({
 var upload = multer({ storage: storage })
 
 router.post('/uploadFile', upload.single('file'), function(req, res, next) {
-  var ret = {
-    msg: `${req.file.filename}文件上传成功！`,
-  }
-  res.send(JSON.stringify(ret));
+  let id = req.body.id;
+  let path = `${__dirname}/note/${id}/`;
+  let noteList = [];
+  fs.readdir(path ,function(err,files){
+    files.forEach(v=>{
+      if (v.split('.')[1] === 'md') {
+        noteList.push(v);
+      }
+    })
+    var ret = { msg: `${req.file.filename}文件上传成功！`,noteList:noteList };
+    res.send(JSON.stringify(ret));
+  })
 });
 
 router.post('/saveMDDetail', function(req, res, next) {
@@ -239,6 +247,24 @@ router.post('/saveMDDetail', function(req, res, next) {
     var ret = { msg: `文件保存成功！` };
     res.send(JSON.stringify(ret));
   });
+});
+
+router.post('/delMDDetail', function(req, res, next) {
+  let id = req.body.id;
+  let name = req.body.name;
+  let path = `${__dirname}/note/${id}/`;
+  let filename =  `${path}${name}`;
+  let noteList = [];
+  fs.unlinkSync(filename); 
+  fs.readdir(path ,function(err,files){
+    files.forEach(v=>{
+      if (v.split('.')[1] === 'md') {
+        noteList.push(v);
+      }
+    })
+    var ret = { msg: `成功删除文章！`,noteList:noteList };
+    res.send(JSON.stringify(ret));
+  })
 });
 
 router.get('/getCount', function(req, res, next) {

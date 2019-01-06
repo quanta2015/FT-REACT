@@ -69,6 +69,14 @@ export function saveMD(id,name,md) {
   }
 }
 
+export function delMD(id,name) {
+  const response = axios.post(conf.host + 'delMDDetail', {id:id,name:name});
+  return {
+    type: 'del_md_detail',
+    payload: response
+  }
+}
+
 export function fetchMoocList() {
   const response = axios.get(conf.host + 'getMoocList');
   return {
