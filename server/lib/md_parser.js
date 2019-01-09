@@ -23,7 +23,7 @@ var defaultJSON = {
     theme: 'moon',
     transition: 'move',
     files: '',
-    highlightStyle: 'monokai_sublime',
+    highlightStyle: 'xcode',
     headFiles: '',
     usemathjax: '', //如果为yes，则引入mathjax，默认不建议开启，导出文件太多
     date: ''

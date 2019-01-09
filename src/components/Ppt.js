@@ -1,7 +1,6 @@
 import React, { Component }  from 'react';
 import { connect } from 'react-redux';
 import { fetchPPT,setLoading } from '../actions';
-import { Spin } from 'antd'; 
 import $ from 'jquery';
 import conf from '../config';
 
@@ -17,18 +16,12 @@ class Project extends Component {
 
   render() {  
     const { pptFile } = this.props;
-    let show ;
-    if (typeof(pptFile) === 'undefined') {
-      show = false;
-    }else{
-      show = true;
-    }
-
+    let show = (typeof(pptFile) === 'undefined')?false:true;
     let url = `${conf.host}ppt?id=${pptFile}`
 
     return (
       <div className="g-ppt">
-        {show?<iframe src={url} frameBorder="0" title="ppt"></iframe>:''}
+        {show?<iframe className="m-ppt" src={url} frameBorder="0" title="ppt"></iframe>:''}
      </div>
     )    
   }

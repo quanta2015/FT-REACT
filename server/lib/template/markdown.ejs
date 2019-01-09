@@ -14,7 +14,7 @@
     <%if (query && (query.print || query.pdf)) {%>
         <link rel="stylesheet" media="all" href="/css/pdf.css">
     <%}%>
-    <link rel="stylesheet" href="/js/highlight/styles/<%if (hasOwnProperty('highlightStyle') && highlightStyle!=='') { %><%- highlightStyle %><% }else{%>monokai_sublime<%}%>.css">
+    <link rel="stylesheet" href="/js/highlight/styles/<%if (hasOwnProperty('highlightStyle') && highlightStyle!=='') { %><%- highlightStyle %><% }else{%>tomorrow-night-blue<%}%>.css">
     <link rel="stylesheet" href="/css/font-awesome.css">
     <%- headFiles %>
 </head>

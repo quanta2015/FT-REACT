@@ -8,6 +8,10 @@ html {
   width: 100%;
 }
 
+.g-home,.g-proj, .g-st, .g-about {
+  margin-top: 73px;
+}
+
 .g-ppt iframe {
   width: 100%;
   height: 100vh;

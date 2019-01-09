@@ -21,7 +21,8 @@ let data = {
     {"name":"戴思敏", "img":"st-dsm.jpg", "data":"dsm", "tech":"node/react/mysql"},
     {"name":"胡麒阳", "img":"st-hqy.jpg", "data":"hqy", "tech":"node/mongodb"},
     {"name":"郑明明", "img":"st-zmm.jpg", "data":"zmm", "tech":"node/mongodb"},
-    {"name":"王慧英", "img":"st-why.jpg", "data":"why", "tech":"node/react/mongodb"}
+    {"name":"王慧英", "img":"st-why.jpg", "data":"why", "tech":"node/react/mongodb"},
+    {"name":"Guest", "img":"st-guest.jpg", "data":"guest", "tech":"none"},
   ]
 }
 

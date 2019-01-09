@@ -186,7 +186,7 @@ router.get('/doLogin', function(req, res, next) {
         console.log(error);
       }
     }else{
-      if ( pwd === dat) {
+      if ( pwd === dat.trim()) {
         code = 0;
         msg = "登录成功！";
       }else{

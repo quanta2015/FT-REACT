@@ -1,15 +1,19 @@
+
 /*
 
 XCode style (c) Angel Garcia <angelgarcia.mail@gmail.com>
 
 */
 
+
 .hljs {
   display: block;
   overflow-x: auto;
   padding: 0.5em;
-  background: #fff;
+  background: #eee;
   color: black;
+  border: 1px solid #ddd;
+  border-radius: 0 0 5px 5px;
   -webkit-text-size-adjust: none;
 }
 
