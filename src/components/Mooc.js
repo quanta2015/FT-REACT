@@ -35,6 +35,24 @@ class Mooc extends Component {
     this.props.getMoocDetail(mp);
   }
 
+  showPPT =(e)=> {
+    e.stopPropagation();
+
+    let { moocList } = this.props;
+    let moocId = this.state.index;
+    let moocName = moocList[moocId].mooc;
+    let cid = $(e.currentTarget).data("cid");
+    let lid = $(e.currentTarget).data("lid");
+    let chapName = moocList[moocId].list[cid].chap;
+    let itemName = moocList[moocId].list[cid].list[lid];
+    let mp =  `${moocName}|${chapName}|${itemName}`;
+
+    // console.log('mp....' + mp)
+    
+    var win = window.open(`/ppt/${mp}`, '_blank');
+    win.focus();  
+  }
+
   slideMooc=(e)=>{
     let sl = $(e.currentTarget);
     let show = sl.data('show');
@@ -74,7 +92,7 @@ class Mooc extends Component {
                 <label className="m-bar-item" data-show="false" onClick={this.slideMooc}>{chap.chap} <i>{chap.list.length}</i> </label>
                 {chap.list.map((v,j)=>{
                   return(
-                    <span className="m-bar-item fn-hide" key={j} data-cid={i} data-lid={j} onClick={this.showMooc}>{v}</span>
+                    <span className="m-bar-item fn-hide" key={j} data-cid={i} data-lid={j} onClick={this.showMooc}>{v} <em  data-cid={i} data-lid={j} onClick={this.showPPT}>P</em> </span>
                   )
                 })}
               </div>

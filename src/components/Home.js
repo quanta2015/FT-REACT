@@ -12,7 +12,6 @@ import reactImg from '../img/mc-react.jpg';
 import sysImg from '../img/sys.svg';
 import conf from '../config';
 
-
 class Home extends Component {
 
   componentDidMount = () =>{
@@ -24,9 +23,6 @@ class Home extends Component {
     projectList = (typeof(projectList)==='undefined')?[]:projectList;
     let stList = db.student;
     let hostPre = conf.host + "img/";
-
-
-    console.log(projectList)
 
     return (
       <div className="g-home">

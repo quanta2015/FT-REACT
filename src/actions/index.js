@@ -108,6 +108,15 @@ export function fetchProjectDetail(pid) {
     payload: response
   }
 }
+
+export function fetchPPT(mpath) {
+  const response = axios.get(conf.host + 'getPPT',{params:{mpath: mpath}} );
+  return {
+    type: 'get_ppt',
+    payload: response
+  }
+}
+
 export function fetchCount() {
   const response = axios.get(conf.host + 'getCount');
   return {

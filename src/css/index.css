@@ -1,5 +1,16 @@
 html {
   min-width: 1200px;
+  min-height: 100vh;
+}
+
+.App {
+  min-height: 100%;
+  width: 100%;
+}
+
+.g-ppt iframe {
+  width: 100%;
+  height: 100vh;
 }
 
 a {
@@ -41,7 +52,12 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
+
 .m-nav {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 2;
   display: flex;
   background: #fff;
   border-bottom: 1px solid #ddd;
@@ -126,7 +142,7 @@ code {
   border-top: 1px solid #eee;
 }
 .g-home .m-proj {
-  width: 200px;
+  width: 300px;
   padding: 10px 40px 10px 25px;
   background: #333;
   color: #eee;
@@ -717,9 +733,14 @@ code {
   padding: 0 0 10px 0;
   background: #aaa;
   position: relative;
+  margin-top: 73px;
+  display: flex;
 }
 
 .g-mooc .m-mooc-menu {
+  position: fixed;
+  width: 100%;
+  z-index: 2;
   height: 30px;
   background: #aaa;
   color: #fff;
@@ -738,11 +759,6 @@ code {
   transition: .5s;
   cursor: pointer;
 }
-
-/* .g-mooc .m-mooc-item:hover {
-  background: #ff6600;
-  
-} */
 
 .g-mooc .m-mooc-item:first-child {
   margin-left: 10px;
@@ -769,9 +785,14 @@ code {
   background: #aaa;
   display: flex;
   flex-direction: row;
+  margin-top: 30px;
+  width: 100%;
 }
 
 .g-mooc .m-mooc-bar {
+  position: fixed;
+  z-index: 2;
+  top: 110px;
   margin-left: 10px;
   width: 200px;
   background: #666;
@@ -794,24 +815,26 @@ code {
   background: #666!important;
   color: #fff;
   position: relative;
+  cursor: pointer;
 }
 
 .g-mooc .m-mooc-chap span{
   padding-left: 20px; 
   cursor: pointer;
   transition: .2s;
+  position: relative;
 }
 
 .g-mooc .m-mooc-chap span:hover{
   background: #eee;
-  border-right: 5px solid #ff6600;
+  border-left: 5px solid #ff6600;
 }
 .g-mooc .m-bar-item:first-child, .g-mooc .m-bar-item:last-child {
   border: none;
 }
 
 .g-mooc .m-mooc-main {
-  margin: 0 5px 0 5px;
+  margin: 3px 5px 0 215px;
   border: 1px solid #ccc;
   flex: 1;
   padding: 5px 10px;
@@ -831,6 +854,29 @@ code {
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
+}
+
+.g-mooc .m-mooc-chap span em {
+  display: flex;
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 100%;
+  background: #ff6600;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+}
+
+.g-mooc .m-mooc-chap label em:before {
+  content: 'pt';
+  font-size: 10px;
+  position: absolute;
+  top: 0px;
+  left: 15px;
+
 }
 
 .g-mooc .fn-active {

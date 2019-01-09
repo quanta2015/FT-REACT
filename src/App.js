@@ -7,6 +7,7 @@ import Mooc from "./components/Mooc";
 import Student from "./components/Student";
 import About from "./components/About";
 import Login from "./components/Login/Login";
+import PPT from "./components/Ppt";
 import { withRouter } from 'react-router';
 import { fetchCount } from './actions';
 
@@ -49,6 +50,7 @@ class App extends Component {
         <Route exact path="/mooc" component={Mooc} />
         <Route exact path="/student" component={Student} />
         <Route exact path="/about" component={About} />
+        <Route exact path="/ppt/:id" component={PPT} />
       </div>
     );
   }
