@@ -1,22 +1,12 @@
-@media screen and (min-width: 1000px) { 
+@media screen and (max-width: 999px) { 
 
 html {
-  min-width: 1200px;
   min-height: 100vh;
 }
 
 .App {
   min-height: 100%;
   width: 100%;
-}
-
-.g-home,.g-proj, .g-st, .g-about {
-  margin-top: 73px;
-}
-
-.g-ppt iframe {
-  width: 100%;
-  height: 100vh;
 }
 
 a {
@@ -60,14 +50,13 @@ code {
 }
 
 .m-nav {
-  position: fixed;
   width: 100%;
-  min-width: 1200px;
   top: 0;
   z-index: 2;
   display: flex;
   background: #fff;
   border-bottom: 1px solid #ddd;
+  position: fixed;
 }
 .m-logo {
   padding: 10px 10px 5px 10px;
@@ -86,11 +75,7 @@ code {
   color: #333;
 }
 .m-menu {
-  flex: 1;
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-  padding: 7px;
+  display: none;
 }
 .m-menu a {
   padding: 0 3px;
@@ -106,6 +91,12 @@ code {
 .m-menu a:active {
   color: #666;
 }
+
+.g-home {
+  margin-top: 75px;
+  margin-bottom: 60px;
+}
+
 .g-home .m-cnt {
   display: flex;
   flex-direction: row;
@@ -119,132 +110,42 @@ code {
   border: 1px solid #ddd;
 }
 .g-home .m-mooc {
-  background: #fff;
-  padding: 0 20px;
-}
-.g-home .m-mooc-item {
-  position: relative;
-  margin: 10px 15px;
-  border: 1px solid #ccc;
-  transition: 0.5s;
-}
-.g-home .m-mooc-item:hover {
-  box-shadow: 2px 2px 5px #bbb;
-}
-.g-home .m-mooc-item img {
-  width: 200px;
-  height: 120px;
-  padding: 5px;
-}
-.g-home .m-mooc-item span {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  display: block;
-  background: rgba(255, 255, 255, 0.95);
-  right: 0;
-  padding: 5px;
-  color: #333;
-  font-size: 14px;
-  border-top: 1px solid #eee;
+  display: none;
 }
 .g-home .m-proj {
-  width: 300px;
-  padding: 10px 40px 10px 25px;
-  background: #333;
-  color: #eee;
+  display: none;
 }
-.g-home .m-proj-item {
-  margin-left: 20px;
-  padding-bottom: 20px;
-}
-.g-home .m-proj-item span {
-  display: block;
-  position: relative;
-}
-.g-home .m-proj-item span:before {
-  display: block;
-  content: '';
-  height: 50px;
-  position: absolute;
-  left: -15px;
-  border-left: 1px solid #fff;
-}
-.g-home .m-proj-item span:first-child {
-  font-size: 16px;
-  color: #ff3300;
-}
-.g-home .m-proj-item .m-date:after {
-  display: block;
-  content: '';
-  width: 0px;
-  height: 0px;
-  border: 5px solid #fff;
-  border-radius: 5px;
-  position: absolute;
-  left: -19px;
-  top: 5px;
-}
-.g-home .m-proj-item span:nth-child(2n) {
-  margin: 5px 0;
-  padding: 5px;
-  background: #eee;
-  color: #666;
-  transition: 0.5s;
-  cursor: pointer;
-}
-.g-home .m-proj-item span:nth-child(2n):hover {
-  background: #fff;
-  box-shadow: 2px 2px 5px #ccc;
-}
+
+
 .g-home .m-st {
-  width: 200px;
-  background: #333;
-  padding: 10px 0;
-}
-.g-home .m-st-item img {
-  width: 80px;
-  background: #fff;
-}
-.g-home .m-st-item span {
-  display: block;
-  padding: 10px;
-  background: #eee;
-  width: 40px;
-}
-.g-home .m-st-item {
-  display: flex;
-  height: 80px;
-  margin: 10px;
-  justify-content: center;
-}
-.g-home .m-desc span:before {
-  content: '';
-  display: block;
-  height: 26px;
-  position: absolute;
-  width: 25px;
-  background: #ff6600;
-  top: 0;
-  left: -25px;
-}
-.g-home .m-desc span {
-  display: block;
-  padding: 5px 10px;
-  margin: 5px;
-  background: #666;
-  color: #fff;
-  font-size: 12px;
-  position: relative;
-}
-.g-home .m-desc {
-  display: flex;
-  flex-direction: column;
-  padding: 10px 20px;
-}
-.g-home .m-cur img {
-  background: #fff;
+  position: fixed;
+  bottom: 0;
   padding: 5px;
+  background: #666;
+  overflow: hidden;
+  width: 100%;
+  height: 70px;
+}
+
+.g-home .m-st-wrap {
+  display: flex;
+  position: absolute;
+  left: 5px;
+  transition: .5s;
+}
+
+.g-home .m-st-item {
+  height: 60px;
+}
+
+.g-home .m-st-item img {
+  width: 60px;
+  height: 60px;
+  margin: 0 5px 0 0;
+}
+
+.g-home .m-st-item span {
+  display: none;
 }
 
 .g-home .m-notelist>a{
@@ -259,14 +160,15 @@ code {
   color: #ff6600;
 }
 
+
 .g-home .m-noteitem {
-  display: flex;
-  flex-direction: column;
-  margin: 0 0 10px 0;
-  background: #eee;
-  padding: 5px 10px;
-  transition: .5s;
-  cursor: pointer;
+    display: flex;
+    margin: 0 0 5px 0;
+    background: #eee;
+    padding: 5px 10px;
+    -webkit-transition: .5s;
+    align-items: center;
+    height: calc( ( 100vh - 83px - 60px - 50px - 64px )/10 );
 }
 
 
@@ -279,33 +181,37 @@ code {
   text-decoration: none;
   color: #333;
   font-size: 16px;
+  flex: 1;
 }
 
 
 
 .m-footer {
-  height: 200px;
   background: #666;
   color: #eee;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px 0 0 0;
+  padding: 20px 10px;
+  margin-bottom: 50px;
+}
+
+.m-footer img:last-child {
+  margin-right: 0;
+}
+.m-footer img {
+  width: calc( (100% - 15px)/4 );
+  margin: 0 5px 5px 0;
 }
 .m-ft span {
   display: block;
   padding: 5px;
 }
 .m-ft:last-child {
-  margin-top: 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-.m-ft img {
-  width: 120px;
-  margin: 10px 10px 0 10px;
 }
 
 
@@ -385,7 +291,6 @@ code {
   right: 0;
   bottom: 0;
   display: black;
-  z-index: 999;
 }
 
 .g-proj .m-proj-detail .m-proj-wrap{
@@ -845,13 +750,6 @@ code {
   width: 200px;
   background: #666;
   padding: 1px;
-  height: 500px;
-  overflow: hidden;
-}
-
-.m-mooc-wrap {
-  position: absolute;
-  width: 100%;
 }
 
 .g-mooc .m-mooc-chap {
@@ -961,5 +859,8 @@ code {
   font-size: 12px;
 }
 
+.g-footer {
+  display: none;
+}
 
 }

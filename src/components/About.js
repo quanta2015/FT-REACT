@@ -1,5 +1,5 @@
 import React, { Component }  from 'react';
-import logo from '../img/logob.svg'
+import logo from '../img/sys/logob.svg'
 
 class About extends Component {
 
@@ -19,7 +19,7 @@ class About extends Component {
         </div>
         
         <div className="u-line"></div>
-        <iframe class="m-map" width='800' height='300' frameborder='0' scrolling='no' marginheight='0' marginwidth='0' title="map" src='http://f.amap.com/gUBu_0176hND'></iframe>'
+        <iframe className="m-map" width='800' height='300' frameBorder='0' scrolling='no' marginHeight='0' marginWidth='0' title="map" src='http://f.amap.com/gUBu_0176hND'></iframe>'
       </div>
     )
   }

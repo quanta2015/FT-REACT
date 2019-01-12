@@ -8,7 +8,6 @@ import {toastIt} from '../components/Toastr/toastr';
 import { Pagination,Spin } from 'antd';
 
 var _cur_file_name;
-const PAGE_SIZE = 10;
 
 class Student extends Component {
 
@@ -107,19 +106,17 @@ class Student extends Component {
   onChange = e => this.setState({ mdDetail: e.target.value })
 
   onChangePage = (e) => {
-    console.log(e)
     this.setState({index: e});
   }
 
   render() {
-    let stImg = "#";
-    let tech = [];
+    let tech = [],data = [],stImg = "#",total;
     let stList = db.student;
-    let hostPre = conf.host + 'img/';
+    const PAGE_SIZE = conf.pagesize;
+    let hostPre = conf.host + 'img/sys/';
     let { student,isEdit,index } = this.state;
     let { noteList,noteDetail,isLogin,loading } = this.props;
-    let total;
-    let data = [];
+    
 
     if ((typeof(noteList)==='undefined')) {
       noteList = [];

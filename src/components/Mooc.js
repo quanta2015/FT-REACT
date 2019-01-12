@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { fetchMoocList,fetchMoocDetail,setLoading } from '../actions';
 import $ from 'jquery';
 import { Spin } from 'antd'; 
+import api from '../lib/api';
 
 class Mooc extends Component {
 
@@ -37,7 +38,6 @@ class Mooc extends Component {
 
   showPPT =(e)=> {
     e.stopPropagation();
-
     let { moocList } = this.props;
     let moocId = this.state.index;
     let moocName = moocList[moocId].mooc;
@@ -46,10 +46,7 @@ class Mooc extends Component {
     let chapName = moocList[moocId].list[cid].chap;
     let itemName = moocList[moocId].list[cid].list[lid];
     let mp =  `${moocName}|${chapName}|${itemName}`;
-
-    // console.log('mp....' + mp)
-    
-    var win = window.open(`/ppt/${mp}`, '_blank');
+    let win = window.open(`/ppt/${mp}`, '_blank');
     win.focus();  
   }
 
@@ -69,6 +66,10 @@ class Mooc extends Component {
       chapList = [];
     }else{
       chapList = moocList[index].list;
+
+      //菜单滚动
+      let o = document.querySelector('.m-mooc-wrap');
+      api.addScroll(o);
     }
 
     return (
@@ -86,6 +87,7 @@ class Mooc extends Component {
 
         <div className="m-mooc-cnt">
           <div className="m-mooc-bar">
+          <div className="m-mooc-wrap">
           {chapList.map((chap,i)=>{
             return(
               <div className="m-mooc-chap"  key={i}>
@@ -98,6 +100,7 @@ class Mooc extends Component {
               </div>
             )
           })}
+          </div>
           </div>
           <div className="m-mooc-main">
           <div className="markdown-body" dangerouslySetInnerHTML = {{ __html:moocDetail }}></div>

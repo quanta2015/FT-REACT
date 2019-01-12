@@ -71,7 +71,7 @@ class Project extends Component {
             <div className="m-detail-sub">
               <span className="m-tech">
                 {projectDetail.techList.map((item,i)=>{
-                  return (<i>{item}</i>)
+                  return (<i key={i}>{item}</i>)
                 })}
               </span>
               <span className="m-date">{projectDetail.date}</span>

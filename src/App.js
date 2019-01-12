@@ -8,11 +8,12 @@ import Student from "./components/Student";
 import About from "./components/About";
 import Login from "./components/Login/Login";
 import PPT from "./components/Ppt";
+import Art from "./components/Art";
 import { withRouter } from 'react-router';
 import { fetchCount } from './actions';
 
-import logob from './img/logob.svg';
-import logoc from './img/logoc.svg'
+import logob from './img/sys/logob.svg';
+import logoc from './img/sys/logoc.svg'
 
 class App extends Component {
 
@@ -32,7 +33,6 @@ class App extends Component {
             </Link>
             <label>F</label>
             <span>ront-Tech</span>
-            
           </div>
           <div className="m-count"><span>{count}</span></div>
           <div className="m-menu">
@@ -51,6 +51,7 @@ class App extends Component {
         <Route exact path="/student" component={Student} />
         <Route exact path="/about" component={About} />
         <Route exact path="/ppt/:id" component={PPT} />
+        <Route exact path="/art/:id" component={Art} />
       </div>
     );
   }

@@ -14,6 +14,7 @@ let data = {
     {"date":"2018-12-18", "name":"Front-Tech [PC]", "tech":"react/node"},
   ],
   "student":[
+    {"name":"sys", "img":"logo.svg", "data":"sys", "tech":"none"},
     {"name":"李帆顺", "img":"st-lfs.jpg", "data":"lfs", "tech":"node/react/mysql/mongodb"},
     {"name":"吴震",   "img":"st-wz.jpg", "data":"wz", "tech":"node/react/mysql/mongodb"},
     {"name":"陈文菲", "img":"st-cwf.jpg", "data":"cwf", "tech":"node/python/tensorflow"},
@@ -22,7 +23,7 @@ let data = {
     {"name":"胡麒阳", "img":"st-hqy.jpg", "data":"hqy", "tech":"node/mongodb"},
     {"name":"郑明明", "img":"st-zmm.jpg", "data":"zmm", "tech":"node/mongodb"},
     {"name":"王慧英", "img":"st-why.jpg", "data":"why", "tech":"node/react/mongodb"},
-    {"name":"Guest", "img":"st-guest.jpg", "data":"guest", "tech":"none"},
+    
   ]
 }
 

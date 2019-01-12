@@ -1,46 +1,107 @@
 import React, { Component }  from 'react';
 import { connect } from 'react-redux';
 import Footer from './Footer';
-import { fetchProjectList,setLoading } from '../actions';
-
+import { fetchProjectList,fetchNoteList,setLoading } from '../actions';
+import { Pagination,Spin } from 'antd';
+import $ from 'jquery';
 import db from '../data/data';
 
-import cImg from '../img/mc-c.png';
-import webImg from '../img/mc-web.png';
-import cloudImg from '../img/mc-cloud.png';
-import reactImg from '../img/mc-react.jpg';
-import sysImg from '../img/sys.svg';
+import cImg from '../img/sys/mc-c.png';
+import webImg from '../img/sys/mc-web.png';
+import cloudImg from '../img/sys/mc-cloud.png';
+import reactImg from '../img/sys/mc-react.jpg';
 import conf from '../config';
+
+import Hammer from 'hammerjs';
 
 class Home extends Component {
 
-  componentDidMount = () =>{
-    this.props.getProjectList();
+  constructor(props) {
+    super(props);
+    this.state = {
+      cur:'sys', 
+      index: 1,
+    };
+  }
+  
+  onChangePage = (e) => {
+    this.setState({index: e});
   }
 
+  componentDidMount = () =>{
+    this.props.getProjectList();
+    this.props.getNoteList('sys');
+
+    var p = document.querySelector('.m-st');
+    var stw = document.querySelector('.m-st-wrap');
+    var manager = new Hammer.Manager(stw);
+    var wide = p.clientWidth - stw.clientWidth;
+    manager.add(new Hammer.Swipe());
+    manager.on('swipe', function(e) {
+      var offset; 
+      if (e.offsetDirection === 4) {
+        offset = stw.offsetLeft + e.deltaX ;
+        offset = (offset>5)?5:offset;
+        stw.style.left = offset + 'px';
+      }else if(  e.offsetDirection === 2 ) {
+        offset = stw.offsetLeft + e.deltaX ;
+        offset = (offset<wide)?wide:offset;
+        stw.style.left = offset + 'px';
+      }
+    })
+  }
+
+  noteClick = (e) => {
+    let id = this.state.cur;
+    let mid = $(e.currentTarget).data('id');
+    let name = this.props.noteList[mid];
+    let mp =  `${id}|${name}`;
+
+    var win = window.open(`/art/${mp}`, '_blank');
+    win.focus(); 
+  }
+
+
   render() {  
-    let {projectList}  = this.props;
-    projectList = (typeof(projectList)==='undefined')?[]:projectList;
     let stList = db.student;
-    let hostPre = conf.host + "img/";
+    let hostPre = conf.host + "img/sys/";
+    let total;
+    let data = [];
+    const PAGE_SIZE = conf.pagesize;
+    let { index } = this.state;
+    let {projectList,noteList,loading}  = this.props;
+    projectList = (typeof(projectList)==='undefined')?[]:projectList;
+    
+    if ((typeof(noteList)==='undefined')) {
+      noteList = [];
+      total = 0;
+    }else{
+      total = noteList.length;
+      for(var i=0;i<PAGE_SIZE;i++) {
+        var offset = (index-1)*PAGE_SIZE;
+        if (offset + i>=noteList.length) break;
+        var item = noteList[i + offset];
+        data.push(item);
+      }
+    }
 
     return (
       <div className="g-home">
+        {loading?<div className="loading"><Spin size="large" spinning={loading}/></div>:''}
         <div className="m-cnt">
           <div className="m-cur">
-            <div className="m-title">
-              AI英语面试系统 
+            <div className="m-notelist">
+              {data.map((item,i)=>{
+                return(
+                  <div className="m-noteitem" key={i}  data-id={i+(index-1)*PAGE_SIZE} onClick={this.noteClick}>
+                    <a href="#{i}" >{item.split('@')[1]}</a>
+                    <span>{item.split('@')[0]}</span>
+                    
+                  </div>
+                )
+              })}
             </div>
-            
-            <div className="m-desc">
-              <span>React && Redux 框架</span>
-              <span>Tensorflow 深度学习算法</span>
-              <span>Google Word2Vex 算法</span>
-              <span>讯飞语音识别引擎</span>
-            </div>
-            <div className="m-pic">
-              <img src={sysImg} alt=""/>
-            </div>
+            <Pagination size="large" onChange={this.onChangePage} total={total} defaultPageSize={PAGE_SIZE}/>
           </div>
 
           <div className="m-proj">
@@ -74,7 +135,8 @@ class Home extends Component {
           </div>
 
           <div className="m-st">
-            {stList.map((item,i)=>{
+            <div className="m-st-wrap">
+            {stList.slice(1).map((item,i)=>{
               return(
                 <div className="m-st-item" key={i}>
                   <img src={hostPre+item.img} alt=""/>
@@ -82,6 +144,7 @@ class Home extends Component {
                 </div>
               )
             })}
+            </div>
           </div>
         </div>
         
@@ -96,6 +159,7 @@ const mapStateToProps  = (state) => ({
   idx: state.idx, 
   projectList: state.projectList,
   loading: state.loading,
+  noteList: state.noteList,
 });
 
 const mapDispatchToProps=(dispatch)=>{
@@ -104,9 +168,12 @@ const mapDispatchToProps=(dispatch)=>{
       dispatch( setLoading() );
       dispatch(fetchProjectList());
     },
+    getNoteList: (id) => {
+      dispatch( setLoading() );
+      dispatch(fetchNoteList(id));
+    },
   }
 }
-
 
 export default connect(mapStateToProps,mapDispatchToProps)(Home);
 

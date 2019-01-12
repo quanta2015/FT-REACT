@@ -4,8 +4,7 @@ import { fetchPPT,setLoading } from '../actions';
 import $ from 'jquery';
 import conf from '../config';
 
-class Project extends Component {
-
+class Ppt extends Component {
 
   componentDidMount = () =>{
     var _id = this.props.match.params.id.replace(/\|/g,"/");
@@ -44,4 +43,4 @@ const mapDispatchToProps = (dispatch) => {
 }
 
 
-export default connect(mapStateToProps,mapDispatchToProps)(Project);
+export default connect(mapStateToProps,mapDispatchToProps)(Ppt);

@@ -1,4 +1,3 @@
-
 var express = require('express');
 var fs = require('fs');
 var path = require('path');
@@ -17,12 +16,14 @@ marked.setOptions({
     }
 })
 
+//发送PPT页面
 router.get('/ppt', function(req, res, next) {
   var id = req.query.id;
   var filename= path.resolve(__dirname,'../public')+`/ppt${id}.html`;
   res.sendfile(filename);
 });
 
+//编译PPT
 router.get('/getPPT', function(req, res, next) {
   var params = url.parse(req.url, true).query;
   var mpath = params.mpath;
@@ -43,6 +44,7 @@ router.get('/getPPT', function(req, res, next) {
   res.send( JSON.stringify(ret) );
 });
 
+//取文章内容
 router.get('/getNoteDetail', function(req, res, next) {
   var params = url.parse(req.url, true).query;
   var id = params.id;
@@ -53,6 +55,7 @@ router.get('/getNoteDetail', function(req, res, next) {
   res.send( JSON.stringify(htmlData) );
 });
 
+//取markdown内容
 router.get('/getMDDetail', function(req, res, next) {
   var params = url.parse(req.url, true).query;
   var id = params.id;
@@ -62,6 +65,7 @@ router.get('/getMDDetail', function(req, res, next) {
   res.send( JSON.stringify(markData) );
 });
 
+//取文章列表
 router.get('/getNoteList', function(req, res, next) {
   var params = url.parse(req.url, true).query;
   var id = params.id;
@@ -78,6 +82,7 @@ router.get('/getNoteList', function(req, res, next) {
   })
 });
 
+//取慕课内容
 router.get('/getMoocDetail', function(req, res, next) {
   var params = url.parse(req.url, true).query;
   var mpath = params.mpath;
@@ -120,6 +125,8 @@ router.get('/getMoocList', function(req, res, next) {
   res.send(JSON.stringify(ret));
 });
 
+
+//取项目列表
 router.get('/getProjectList', function(req, res, next) {
   var ret = [];
   var path = `${__projdir}/project/`;
@@ -151,6 +158,8 @@ router.get('/getProjectList', function(req, res, next) {
   res.send(JSON.stringify(ret));
 });
 
+
+//取项目内容
 router.get('/getProjectDetail', function(req, res, next) {
   let params = url.parse(req.url, true).query;
   let pid = params.pid;
@@ -169,7 +178,7 @@ router.get('/getProjectDetail', function(req, res, next) {
   res.send(JSON.stringify(jsonData));
 });
 
-
+//登录
 router.get('/doLogin', function(req, res, next) {
   var params = url.parse(req.url, true).query;
   var usr = params.usr;
@@ -218,6 +227,8 @@ var storage = multer.diskStorage({
 })
 var upload = multer({ storage: storage })
 
+
+//上传文件
 router.post('/uploadFile', upload.single('file'), function(req, res, next) {
   let id = req.body.id;
   let path = `${__projdir}/note/${id}/`;
@@ -233,6 +244,8 @@ router.post('/uploadFile', upload.single('file'), function(req, res, next) {
   })
 });
 
+
+//保存makrdown内容
 router.post('/saveMDDetail', function(req, res, next) {
   let md = req.body.md;
   let id = req.body.id;
@@ -247,6 +260,8 @@ router.post('/saveMDDetail', function(req, res, next) {
   });
 });
 
+
+//删除markdown
 router.post('/delMDDetail', function(req, res, next) {
   let id = req.body.id;
   let name = req.body.name;
@@ -265,6 +280,7 @@ router.post('/delMDDetail', function(req, res, next) {
   })
 });
 
+//计数器
 router.get('/getCount', function(req, res, next) {
   var filename =  `${__projdir}/count`;
 

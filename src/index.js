@@ -9,6 +9,7 @@ import async from './middleware/async';
 // import reduxPromise from 'redux-promise';
 
 import './css/index.css';
+import './css/res.css';
 import './css/github.css';
 import './css/antd.css';
 import './css/antdcode.css';

@@ -1,13 +1,13 @@
 import React, { Component }  from 'react';
 
-import reactFImg from '../img/ft-react.png';
-import reduxFImg from '../img/ft-redux.png';
-import ftFImg from '../img/ft-tf.png';
-import xfFImg from '../img/ft-xf.png';
-import mysqlFImg from '../img/ft-mysql.png';
-import mdbFImg from '../img/ft-mdb.png';
-import nodeImg from '../img/ft-node.png';
-import socketioImg from '../img/ft-socketio.png';
+import reactFImg from '../img/sys/ft-react.png';
+import reduxFImg from '../img/sys/ft-redux.png';
+import ftFImg from '../img/sys/ft-tf.png';
+import xfFImg from '../img/sys/ft-xf.png';
+import mysqlFImg from '../img/sys/ft-mysql.png';
+import mdbFImg from '../img/sys/ft-mdb.png';
+import nodeImg from '../img/sys/ft-node.png';
+import socketioImg from '../img/sys/ft-socketio.png';
 
 class Footer extends Component {
 
