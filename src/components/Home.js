@@ -61,6 +61,14 @@ class Home extends Component {
     win.focus(); 
   }
 
+  //显示当前用户文章
+  showStInfo = (e) => {
+    let id = $(e.currentTarget).data('id');
+    let st = db.student[id+1];
+    this.setState( { student: st, cur: st.data });
+    this.props.getNoteList(st.data);
+  }
+
 
   render() {  
     let stList = db.student;
@@ -94,9 +102,8 @@ class Home extends Component {
               {data.map((item,i)=>{
                 return(
                   <div className="m-noteitem" key={i}  data-id={i+(index-1)*PAGE_SIZE} onClick={this.noteClick}>
-                    <a href="#{i}" >{item.split('@')[1]}</a>
                     <span>{item.split('@')[0]}</span>
-                    
+                    <a href="#{i}" >{item.split('@')[1]}</a>
                   </div>
                 )
               })}
@@ -138,8 +145,8 @@ class Home extends Component {
             <div className="m-st-wrap">
             {stList.slice(1).map((item,i)=>{
               return(
-                <div className="m-st-item" key={i}>
-                  <img src={hostPre+item.img} alt=""/>
+                <div className="m-st-item" key={i} onClick={this.showStInfo} data-id={i}>
+                  <img src={hostPre+item.img} alt="" />
                   <span>{item.name}</span>
                 </div>
               )

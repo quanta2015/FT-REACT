@@ -53,7 +53,6 @@ code {
   width: 100%;
   top: 0;
   z-index: 2;
-  display: flex;
   background: #fff;
   border-bottom: 1px solid #ddd;
   position: fixed;
@@ -90,6 +89,62 @@ code {
 }
 .m-menu a:active {
   color: #666;
+}
+
+
+.m-menu-t {
+  position: absolute;
+  right: 0px;
+  padding: 9px 10px;
+  margin: 12px;
+  background-color: transparent;
+  background-image: none;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  display: block;
+  background: #eee;
+  height: 50px;
+  outline: none;
+}
+.m-menu-t span {
+  display: block;
+  width: 32px;
+  height: 2px;
+  border-radius: 1px;
+  background: #888;
+  }
+
+.m-menu-t span+span {
+  margin-top: 4px;
+}
+
+.m-nav-wrap {
+  display: flex;
+  border-bottom: 1px solid #ccc;
+}
+
+.m-menu-sel ul{
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.m-menu-sel ul li {
+  padding: 15px 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.m-menu-sel ul li a {
+  font-size: 18px;
+}
+
+.m-menu-sel {
+  display: none;
+  /* transition: .5s; */
+}
+
+.m-menu-sel.collapse {
+  display: none !important;
 }
 
 .g-home {
@@ -175,6 +230,7 @@ code {
 .g-home .m-noteitem span {
   font-size: 12px;
   color: #c00;
+  order: 2;
 }
 
 .g-home .m-noteitem a {
@@ -182,6 +238,7 @@ code {
   color: #333;
   font-size: 16px;
   flex: 1;
+  order: 1;
 }
 
 
@@ -220,13 +277,13 @@ code {
   display: flex;
   flex-direction: column;
   background: #eee;
-  padding: 5px;
+  margin-top: 75px;
 }
 .g-proj .m-proj-row {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  margin: 10px 10px 0 10px;
+  margin: 10px 0 0 0;
   background: #fff;
   padding: 10px;
 }
@@ -236,25 +293,26 @@ code {
   justify-content: center;
   align-items: center;
   box-sizing: border-box;
-  width: 100px;
-  height: 100px;
-  padding: 10px;
+  width: 100%;
+  padding: 5px;
   background: #666;
   color: #fff;
-  font-size: 32px;
+  font-size: 18px;
 }
 .g-proj .m-proj-item {
   display: flex;
   flex-direction: column;
-  margin-left: 10px;
-  height: 100px;
-  width: 150px;
+  margin: 10px 10px 0 0;
+  width: calc( (100% - 10px )/2);
   background: #eee;
   color: #666;
   box-sizing: border-box;
   cursor: pointer;
   overflow: hidden;
   transition: 0.7s;
+}
+.g-proj .m-proj-item:nth-child(2n+1) {
+  margin-right: 0!important;
 }
 .g-proj .m-proj-item:hover > .u-date {
   background: #ff6600;
@@ -284,78 +342,65 @@ code {
 }
 
 .g-proj .m-proj-detail {
-  position: absolute;
-  background:rgba(0,0,0,.7);
+  position: fixed;
+  background: rgba(0,0,0,.7);
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   display: black;
+  z-index: 10;
 }
 
-.g-proj .m-proj-detail .m-proj-wrap{
+.g-proj .m-proj-detail .m-proj-wrap {
   position: absolute;
-  width: 800px;
-  /* height: 500px; */
-  /* overflow: scroll; */
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
   font-size: 12px;
-  top: 50%;
-  left: 50%;
   background: #fff;
-  transform: translate(-50%, -50%);
 }
 
 .g-proj .m-close {
   position: absolute;
-  height: 26px;
-  width: 26px;
-  border-radius: 15px;
-  background: #222;
-  right: -13px;
-  top: -13px;
-  cursor: pointer;
-  transition: .5s;
-}
-
-.g-proj .m-close:hover {
-  background: #333;
-}
-
-.g-proj .m-close:before,.g-proj .m-close:after {
-  content: ' ';
-  position: absolute;
-  right: 12px;
+  height: 30px;
+  width: 60px;
+  background: #666;
   top: 5px;
-  border-left: 2px solid #eee;
-  height: 15px;
-  width: 0;
+  right: 5px;
 }
 
-.g-proj .m-close:before {
-  transform: rotate(45deg);
-}
-
-.g-proj .m-close:after {
-  transform: rotate(-45deg);
+.m-close:before {
+  content: 'Close';
+  position: absolute;
+  display: block;
+  left: 12px;
+  font-size: 16px;
+  color: #fff;
+  top: 5px;
 }
 
 
 .g-proj .m-detail-info {
   background: #eee;
   padding: 10px 15px;
+  display: flex;
+  align-items: center;
 }
 
 .g-proj .m-detail-info .m-title {
   font-size: 16px;
   color: #000;
+  order: 2;
 }
 
 .g-proj .m-detail-info .m-type {
-  float: right;
+  margin-right: 5px;
   display: block;
-  background: #666;
+  background: #aaa;
   color: #fff;
-  padding: 3px 15px;
+  padding: 3px 8px;
+  order: 1;
 }
 
 .g-proj .m-detail-sub {
@@ -410,6 +455,7 @@ code {
   justify-content: center;
   color: #fff;
   flex-direction: column;
+  margin-top: 73px;
 }
 .g-about img {
   background: #fff;
@@ -461,6 +507,8 @@ code {
 }
 .g-about .m-map {
   border: 1px solid #aaa;
+  width: 90%;
+  height: 300px;
 }
 
 

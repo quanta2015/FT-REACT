@@ -69,6 +69,13 @@ code {
   background: #fff;
   border-bottom: 1px solid #ddd;
 }
+.m-nav-wrap {
+  display: flex;
+  width: 100%;
+}
+.m-menu-sel {
+  display: none;
+}
 .m-logo {
   padding: 10px 10px 5px 10px;
 }
@@ -106,6 +113,12 @@ code {
 .m-menu a:active {
   color: #666;
 }
+
+.m-menu-t {
+  display: none;
+}
+
+
 .g-home .m-cnt {
   display: flex;
   flex-direction: row;
@@ -556,6 +569,8 @@ code {
 }
 .g-about .m-map {
   border: 1px solid #aaa;
+  width: 800px;
+  height: 300px;
 }
 
 
