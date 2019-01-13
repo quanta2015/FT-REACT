@@ -21,10 +21,19 @@ class Mooc extends Component {
   selectMooc = (e) => {
     let id = $(e.currentTarget).data("id");
     this.setState({index:id});
-    $('.m-mooc-chap span').hide();
+
+    if (document.querySelector('html').clientWidth>999) {
+      $('.m-mooc-chap span').hide();
+    }
+    
   }
 
   showMooc= (e) => {
+    if (document.querySelector('html').clientWidth<1000) {
+      $('.m-mooc-main').show();
+      $('.m-mooc-bar').hide();
+    };
+
     let { moocList } = this.props;
     let moocId = this.state.index;
     let moocName = moocList[moocId].mooc;
@@ -51,9 +60,16 @@ class Mooc extends Component {
   }
 
   slideMooc=(e)=>{
+    if (document.querySelector('html').clientWidth<1000) return;
+
     let sl = $(e.currentTarget);
     let show = sl.data('show');
     (show)?sl.data("show",false).nextAll().hide():sl.data("show",true).nextAll().show();
+  }
+
+  doReturn = (e) =>{
+    $('.m-mooc-main').hide();
+      $('.m-mooc-bar').show();
   }
 
   render() {  
@@ -94,7 +110,7 @@ class Mooc extends Component {
                 <label className="m-bar-item" data-show="false" onClick={this.slideMooc}>{chap.chap} <i>{chap.list.length}</i> </label>
                 {chap.list.map((v,j)=>{
                   return(
-                    <span className="m-bar-item fn-hide" key={j} data-cid={i} data-lid={j} onClick={this.showMooc}>{v} <em  data-cid={i} data-lid={j} onClick={this.showPPT}>P</em> </span>
+                    <span className="m-bar-item" key={j} data-cid={i} data-lid={j} onClick={this.showMooc}>{v} <em  data-cid={i} data-lid={j} onClick={this.showPPT}>P</em> </span>
                   )
                 })}
               </div>
@@ -103,7 +119,8 @@ class Mooc extends Component {
           </div>
           </div>
           <div className="m-mooc-main">
-          <div className="markdown-body" dangerouslySetInnerHTML = {{ __html:moocDetail }}></div>
+            <div className="m-mooc-close" onClick={this.doReturn}>返回</div>
+            <div className="markdown-body" dangerouslySetInnerHTML = {{ __html:moocDetail }}></div>
           </div>
           
         </div>

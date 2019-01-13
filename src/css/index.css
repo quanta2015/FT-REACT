@@ -893,6 +893,7 @@ code {
   cursor: pointer;
   transition: .2s;
   position: relative;
+  display: none;
 }
 
 .g-mooc .m-mooc-chap span:hover{
@@ -910,6 +911,10 @@ code {
   padding: 5px 10px;
   background: #fff;
   overflow: hidden;
+}
+
+.g-mooc .m-mooc-close {
+  display: none;
 }
 
 .g-mooc .m-mooc-chap label i {
