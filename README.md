@@ -1,44 +1,23 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+### 项目说明
 
-## Available Scripts
+.....
 
-In the project directory, you can run:
+### PC版系统功能包括：
 
-### `npm start`
+- 系统包括主页/项目/慕课/学生/联系方式这5块内容；
+- 支持研究所学生登录，登录后修改logo；
+- 首页显示系统文章、项目历史、慕课列表、学生列表；
+- 项目页面显示项目列表，点击弹出页面显示项目具体信息；
+- 慕课页面显示慕课列表，左边已折叠菜单显示全部章节（支持鼠标滚轮操作），点击章节展示具体文章列表，点击文章后显示编译后的markdown数据；点击P后编译PPT并且自动打开；
+- MB版本：慕课页面显示慕课章节和文章列表，点击文章后显示编译后的markdown数据；
+- 学生页面右边显示学生列表，中间默认显示系统文章，左边显示学生详细信息；学生登录后，显示发布文章、删除文章、修改文章、登出功能按钮；
+- 学生页面，点击发布文章可以将本地markdown文章上传发表；点击文章后，文章显示选择状态(右边橙色高亮边框)，再点击修改，则可以在中间修改文章内容；在文章选中状态，点击删除，则可以删除文章；点击登出功能，则退出系统；
+- 联系方式页面，显示联系信息和GIS信息；
 
-Runs the app in the development mode.<br>
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Mobile版系统功能包括：
 
-The page will reload if you make edits.<br>
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br>
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br>
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br>
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- 系统包括主页/项目/慕课/联系方式4块内容；
+- 首页显示系统文章，点击学生可以切换文章；
+- 项目页面显示项目列表，点击弹出页面显示项目具体信息；
+- 慕课页面显示慕课章节和文章列表，点击文章后显示编译后的markdown数据；
+- 联系方式页面，显示联系信息和GIS信息；
