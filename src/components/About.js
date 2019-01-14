@@ -19,7 +19,7 @@ class About extends Component {
         </div>
         
         <div className="u-line"></div>
-        <iframe className="m-map" frameBorder='0' scrolling='no' marginHeight='0' marginWidth='0' title="map" src='http://f.amap.com/gUBu_0176hND'></iframe>'
+        <iframe className="m-map" frameBorder='0' scrolling='no' marginHeight='0' marginWidth='0' title="map" src='https://f.amap.com/gUBu_0176hND'></iframe>'
       </div>
     )
   }

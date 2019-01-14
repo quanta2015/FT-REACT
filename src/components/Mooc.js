@@ -122,8 +122,9 @@ class Mooc extends Component {
             <div className="m-mooc-close" onClick={this.doReturn}>返回</div>
             <div className="markdown-body" dangerouslySetInnerHTML = {{ __html:moocDetail }}></div>
           </div>
-          
         </div>
+
+        <iframe src="https://mooc1-2.chaoxing.com/course/202363749.html"  title="mooc" Style="display:none;"></iframe>
 
       </div>
     )

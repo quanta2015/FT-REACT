@@ -4,13 +4,8 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser')
-// var fs = require('fs');
-// var url = require('url');
-// var multer = require('multer');
-// var moment = require('moment');
-
-// var router = express.Router();
 var router = require('./router/index')
+var fs = require('fs');
 
 var app = express();
 
@@ -37,11 +32,6 @@ app.use('/', router);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-// app.set('views', path.join(__dirname, 'views'));
-// app.engine('html', require('ejs').renderFile);  
-// app.set('view engine', 'html');
-
-
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -60,13 +50,23 @@ app.use(function(err, req, res, next) {
 
 var debug = require('debug')('cl-moocs:server');
 var http = require('http');
+var https = require('https');
+//同步读取密钥和签名证书
+var options = {
+  key:fs.readFileSync('./key/1679788_manqc.top.key'),
+  cert:fs.readFileSync('./key/1679788_manqc.top.pem')
+}
+var httpsServer = https.createServer(options,app);
+httpsServer.listen(4001);
+httpsServer.on('error', onError);
+
 
 var port = normalizePort(process.env.PORT || '4000');
 app.set('port', port);
-var server = http.createServer(app);
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
+var httpServer = http.createServer(app);
+httpServer.listen(port);
+httpServer.on('error', onError);
+httpServer.on('listening', onListening);
 
 
 function normalizePort(val) {
@@ -110,7 +110,7 @@ function onError(error) {
 }
 
 function onListening() {
-  var addr = server.address();
+  var addr = httpServer.address();
   var bind = typeof addr === 'string'
     ? 'pipe ' + addr
     : 'port ' + addr.port;
