@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="439px" height="234px" viewBox="0 0 439 234" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 41.1 (35376) - http://www.bohemiancoding.com/sketch -->
+    <title>面试逻辑图</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <rect id="path-1" x="0" y="0" width="217" height="147"></rect>
+        <mask id="mask-2" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="217" height="147" fill="white">
+            <use xlink:href="#path-1"></use>
+        </mask>
+        <rect id="path-3" x="60" y="7" width="147" height="61"></rect>
+        <mask id="mask-4" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="147" height="61" fill="white">
+            <use xlink:href="#path-3"></use>
+        </mask>
+        <rect id="path-5" x="60" y="74" width="147" height="61"></rect>
+        <mask id="mask-6" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="147" height="61" fill="white">
+            <use xlink:href="#path-5"></use>
+        </mask>
+        <rect id="path-7" x="11" y="74" width="39" height="36"></rect>
+        <mask id="mask-8" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="39" height="36" fill="white">
+            <use xlink:href="#path-7"></use>
+        </mask>
+        <rect id="path-9" x="11" y="7" width="39" height="36" rx="5"></rect>
+        <mask id="mask-10" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="39" height="36" fill="white">
+            <use xlink:href="#path-9"></use>
+        </mask>
+        <rect id="path-11" x="259" y="0" width="180" height="147"></rect>
+        <mask id="mask-12" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="180" height="147" fill="white">
+            <use xlink:href="#path-11"></use>
+        </mask>
+        <rect id="path-13" x="0" y="192" width="439" height="42"></rect>
+        <mask id="mask-14" maskContentUnits="userSpaceOnUse" maskUnits="objectBoundingBox" x="0" y="0" width="439" height="42" fill="white">
+            <use xlink:href="#path-13"></use>
+        </mask>
+    </defs>
+    <g id="逻辑功能图" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="SYS">
+            <use id="MAIN" stroke="#979797" mask="url(#mask-2)" stroke-width="2" fill="#EEEEEE" xlink:href="#path-1"></use>
+            <use id="Q-L" stroke="#979797" mask="url(#mask-4)" stroke-width="2" fill="#FFFFFF" xlink:href="#path-3"></use>
+            <text id="Q" font-family="PingFangSC-Medium, PingFang SC" font-size="36" font-weight="400" fill="#4A4A4A">
+                <tspan x="120" y="48">Q</tspan>
+            </text>
+            <use id="A-L" stroke="#979797" mask="url(#mask-6)" stroke-width="2" fill="#FFFFFF" xlink:href="#path-5"></use>
+            <text id="A" font-family="PingFangSC-Medium, PingFang SC" font-size="36" font-weight="400" fill="#4A4A4A">
+                <tspan x="120" y="115">A</tspan>
+            </text>
+            <use id="TIME" stroke="#979797" mask="url(#mask-8)" stroke-width="2" fill="#9B9B9B" xlink:href="#path-7"></use>
+            <use id="ICON" stroke="#979797" mask="url(#mask-10)" stroke-width="2" fill="#4A4A4A" xlink:href="#path-9"></use>
+        </g>
+        <use id="Rectangle" stroke="#979797" mask="url(#mask-12)" stroke-width="2" fill="#FFFEFE" xlink:href="#path-11"></use>
+        <use id="Rectangle-Copy-2" stroke="#979797" mask="url(#mask-14)" stroke-width="2" fill="#4A4A4A" xlink:href="#path-13"></use>
+        <rect id="XF" fill="#1D8E0F" x="266" y="10" width="163.361345" height="42"></rect>
+        <rect id="XF-Copy" fill="#1D8E0F" x="266" y="60" width="163.361345" height="35"></rect>
+        <rect id="XF-Copy-2" fill="#1D8E0F" x="266" y="103" width="163.361345" height="35"></rect>
+        <text id="Long-Form-ASR" font-family="MicrosoftYaHei, Microsoft YaHei" font-size="14" font-weight="normal" fill="#FCFCFC">
+            <tspan x="296.101562" y="39">Long Form ASR</tspan>
+        </text>
+        <text id="Interview-Voice-Data" font-family="MicrosoftYaHei, Microsoft YaHei" font-size="14" font-weight="normal" fill="#FCFCFC">
+            <tspan x="118.767578" y="218">Interview Voice Database</tspan>
+        </text>
+        <text id="TensorFlow" font-family="MicrosoftYaHei, Microsoft YaHei" font-size="14" font-weight="normal" fill="#FCFCFC">
+            <tspan x="308.231839" y="126">TensorFlow</tspan>
+        </text>
+        <text id="LDA" font-family="MicrosoftYaHei, Microsoft YaHei" font-size="14" font-weight="normal" fill="#FCFCFC">
+            <tspan x="336.773438" y="82">LDA</tspan>
+        </text>
+        <path d="M402.5,147.5 L402.5,191.5" id="Line" stroke="#979797" stroke-linecap="square"></path>
+        <path id="Line-decoration-1" d="M402.5,191.5 L405.5,180.7 L399.5,180.7 L402.5,191.5 Z" stroke="#979797" stroke-linecap="square"></path>
+        <path d="M293.5,191.5 L293.5,150.5" id="Line" stroke="#979797" stroke-linecap="square"></path>
+        <path id="Line-decoration-1" d="M293.5,150.5 L290.5,161.3 L296.5,161.3 L293.5,150.5 Z" stroke="#979797" stroke-linecap="square"></path>
+        <path d="M259.5,115.5 L217.5,115.5" id="Line" stroke="#979797" stroke-linecap="square"></path>
+        <path id="Line-decoration-1" d="M217.5,115.5 L228.3,118.5 L228.3,112.5 L217.5,115.5 Z" stroke="#979797" stroke-linecap="square"></path>
+        <path d="M216.5,34.5 L260.5,34.5" id="Line" stroke="#979797" stroke-linecap="square"></path>
+        <path id="Line-decoration-1" d="M260.5,34.5 L249.7,31.5 L249.7,37.5 L260.5,34.5 Z" stroke="#979797" stroke-linecap="square"></path>
+    </g>
+</svg>

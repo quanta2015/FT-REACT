@@ -21,11 +21,15 @@ app.all('*', function(req, res, next) {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(express.json());k
+app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(__dirname + '/'));
+
 app.use('/', router);
+
+
 
 
 // view engine setup
@@ -50,23 +54,25 @@ app.use(function(err, req, res, next) {
 
 var debug = require('debug')('cl-moocs:server');
 var http = require('http');
-var https = require('https');
-//同步读取密钥和签名证书
-var options = {
-  key:fs.readFileSync('./key/1679788_manqc.top.key'),
-  cert:fs.readFileSync('./key/1679788_manqc.top.pem')
-}
-var httpsServer = https.createServer(options,app);
-httpsServer.listen(4001);
-httpsServer.on('error', onError);
-
-
 var port = normalizePort(process.env.PORT || '4000');
 app.set('port', port);
 var httpServer = http.createServer(app);
 httpServer.listen(port);
 httpServer.on('error', onError);
 httpServer.on('listening', onListening);
+
+// var https = require('https');
+//同步读取密钥和签名证书
+// var options = {
+//   key:fs.readFileSync('./key/1679788_manqc.top.key'),
+//   cert:fs.readFileSync('./key/1679788_manqc.top.pem')
+// }
+// var httpsServer = https.createServer(options,app);
+// httpsServer.listen(4001);
+// httpsServer.on('error', onError);
+
+
+
 
 
 function normalizePort(val) {

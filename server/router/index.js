@@ -16,10 +16,30 @@ marked.setOptions({
     }
 })
 
+
+router.get('/', function(req, res) {
+  res.sendfile(__dirname + '/index.html');
+});
+
+
 //发送PPT页面
 router.get('/ppt', function(req, res, next) {
-  var id = req.query.id;
-  var filename= path.resolve(__dirname,'../public')+`/ppt${id}.html`;
+  var params = url.parse(req.url, true).query;
+  var mpath = params.parms.split('|').join('/');
+  var filename =  `${__projdir}/mooc/${mpath}.md`;
+  var outdir = path.resolve(__dirname,'../public');
+
+  let files = fs.readdirSync(outdir);
+  files.forEach((file,index)=>{
+    let filePath = `${outdir}/${file}`;
+    if (( file.indexOf("ppt")===0)&&(fs.statSync(filePath).isFile())) {
+      fs.unlinkSync(filePath);
+    }
+  })
+
+  //编译ppt成html,返回文件id
+  var fileId = genppt(filename,outdir,'.');
+  var filename= path.resolve(__dirname,'../public')+`/ppt${fileId}.html`;
   res.sendfile(filename);
 });
 
