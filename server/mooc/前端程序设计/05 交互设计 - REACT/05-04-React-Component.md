@@ -46,8 +46,7 @@ const HelloMessage = (props) => <div> Hello {props.name}</div>;
 render(<HelloMessage name="John" />, mountNode);
 ```
 
-因为无状态组件只是函数，所以它没有实例返回，这点在想用 refs
-获取无状态组件的时候要注意，参见[DOM 操作](dom.md)。
+> 因为无状态组件只是函数，所以它没有实例返回，这点在想用 `refs` 获取无状态组件的时候要注意，参见[DOM 操作](dom.md)。
 
 [slide]
 # 组件生命周期
@@ -57,7 +56,7 @@ render(<HelloMessage name="John" />, mountNode);
 
 [slide]
 # `getInitialState`
-初始化 `this.state` 的值，只在组件装载之前调用一次。如果是使用 ES6 的语法，你也可以在构造函数中初始化状态，比如：
+初始化 `this.state` 的值，只在组件装载之前调用一次。React在ES6的实现中去掉了`getInitialState`这个hook函数,规定`state`在`constructor`中实现,
 
 ```js
 class Counter extends Component {
@@ -75,21 +74,43 @@ class Counter extends Component {
 # `getDefaultProps`
 只在组件创建时调用一次并缓存返回的对象（即在 `React.createClass` 之后就会调用）。因为这个方法在实例初始化之前调用，所以在这个方法里面不能依赖`this` 获取到这个组件的实例。
 
+[slide]
 在组件装载之后，这个方法缓存的结果会用来保证访问 `this.props` 的属性时，当这个属性没有在父组件中传入（在这个组件的 JSX属性里设置），也总是有值的。
 
+[slide]
 如果是使用 ES6 语法，可以直接定义 `defaultProps`这个类属性来替代，这样能更直观的知道 default props 是预先定义好的对象值：
 
-```javascript
-Counter.defaultProps = { initialCount: 0 };
+```js
+class Login extends React.Component {
+  static defaultProps = {
+      user: null,
+      pwd: null
+  }        
+  constructor(props) {
+      super(props);
+      this.state = {isLogin: false};
+  }
 ```
 
 [slide]
 # `render`
-**必须**  
-组装生成这个组件的 HTML 结构（使用原生 HTML 标签或者子组件），也可以返回 `null` 或者 `false`，这时候 `ReactDOM.findDOMNod(this)` 会返回 `null`。
+组装生成这个组件的 HTML 结构（使用原生 HTML 标签或者子组件），也可以返回 `null` 或者 `false`，这时候 `ReactDOM.findDOMNode(this)` 会返回 `null`。
 
 [slide]
 # 生命周期函数
+
+- componentWillmount: 组件初始化时调用,以后组件更新不再调用,此时可以更改state
+- render: 渲染创建虚拟DOM, 进行Diff算法, 更新DOM树。
+- componentDidmount: 组件渲染之后调用,只调用一次。
+- componentWillReceiveprops: 组件初始化时不调用,只有接收新的props时才调用。
+- shouldConponentUpdate：是react性能优化重要的一环,组件接收新的props或者state时调用，此时，可以比较前后两个state或者props,如果相同,则返回false阻止更新,因为相同的props或者state会创建相同的DOM。阻止更新可以避免创建相同的DOM和进行不必要的Diff算法,节省大量性能。注意 此时不可以调用this.setState()方法,会造成死循环。
+- componentWillUpdate: 组件初始化时不调用,只有在组件将要更新时才调用,此时可以修改state。注意,此时不可以调用this.setState()方法,会造成死循环。
+- componentDidUpdate: 组件初始化的时候不调用,只有组件完成更新之后调用,此时可以操作DOM。
+- componentWillUnmount: 销毁组件,此时可以清除一定的事件监听和定时器。
+
+[slide]
+
+![Alt text](../../img/react/reactlife.jpg)
 
 [slide]
 # 装载组件触发
@@ -135,8 +156,6 @@ delegation）的方式绑定到组件最上层，并且在组件卸载（unmount
 
 [slide]
 # **Tips**
-关于这两种事件绑定的使用，这里有必要分享一些额外的人生经验
-
 如果混用“合成事件”和“原生事件”，比如一种常见的场景是用原生事件在 document上绑定，然后在组件里面绑定的合成事件想要通过 `e.stopPropagation()`来阻止事件冒泡到 document，这时候是行不通的，参见 [Event delegation](http://stackoverflow.com/a/24421834/581094)，因为 `e.stopPropagation` 是内部“合成事件” 层面的，解决方法是要用 `e.nativeEvent.stopImmediatePropagation()`
 
 [slide]
@@ -186,7 +205,6 @@ DOM 元素。
 
 ```javascript
 import { findDOMNode } from 'react-dom';
-
 // Inside Component class
 componentDidMound() {
   const el = findDOMNode(this);
@@ -201,6 +219,7 @@ componentDidMound() {
 
 比如有一种情况是必须直接操作 DOM 来实现的，你希望一个 `<input/>`元素在你清空它的值时 focus，你没法仅仅靠 `state` 来实现这个功能。
 
+[slide]
 ```javascript
 class App extends Component {
   constructor() {
@@ -327,6 +346,8 @@ const MyComponent = (props) => {
 [slide]
 实际上浏览器在遍历一个字面量对象的时候会保持顺序一致，除非存在属性值可以被转换成整数值，这种属性值会排序并放在其他属性之前被遍历到，所以为了防止这种情况发生，可以在构建这个字面量的时候在`key` 值前面加字符串前缀，比如：
 
+
+[slide]
 ```javascript
 render() {
   var items = {};

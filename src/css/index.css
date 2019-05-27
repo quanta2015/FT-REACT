@@ -860,7 +860,7 @@ code {
   width: 200px;
   background: #666;
   padding: 1px;
-  height: 500px;
+  height: calc( 100vh - 125px );
   overflow: hidden;
 }
 

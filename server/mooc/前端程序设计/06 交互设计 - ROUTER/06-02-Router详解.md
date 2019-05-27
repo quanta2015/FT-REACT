@@ -12,6 +12,7 @@ theme: light
 npm install react-router-dom
 ```
 
+[slide]
 ## 范例1: 基本路由
 下面范例通过 3 个`<Router>`控制 3个 `Page` 对象。
 
@@ -44,21 +45,23 @@ const AppRouter = () => (
 export default AppRouter;
 ```
 
+
+[slide]
 ## 范例2: 嵌套路由
 路由 `/topics` 加载 `Topics` 对象, 而`Topics` 对象根据  `<Route>`传过来的 `:id` 渲染数据内容.
 
 ```jsx
 import React from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+import { BrowserRouter , Route, Link } from "react-router-dom";
 const App = () => (
-  <Router>
+  <BrowserRouter>
     <div>
       <Header />
       <Route exact path="/" component={Home} />
       <Route path="/about" component={About} />
       <Route path="/topics" component={Topics} />
     </div>
-  </Router>
+  </BrowserRouter>
 );
 const Home = () => <h2>Home</h2>;
 const About = () => <h2>About</h2>;
@@ -85,42 +88,144 @@ export default App;
 ```
 
 
+[slide]
+# 基本对象
 
-
-# Basic Components
-
-There are three types of components in React Router: router components, route matching components, and navigation components.
-
-All of the components that you use in a web application should be imported from `react-router-dom`.
+React Router中有3种对象: `router components`, `route matching components`, 和 `navigation components`. 可以通过 `react-router-dom` 来引用。
 
 ```js
 import { BrowserRouter, Route, Link } from "react-router-dom";
 ```
 
-## Routers
 
-At the core of every React Router application should be a router component. For web projects, `react-router-dom` provides `<BrowserRouter>` and `<HashRouter>` routers. Both of these will create a specialized `history` object for you. Generally speaking, you should use a `<BrowserRouter>` if you have a server that responds to requests and a `<HashRouter>` if you are using a static file server.
+[slide]
+# 路由
+每个路由应用都必须通过 `router` 对象来实现, 而对于web应用来说，`react-router-dom` 提供了 `<BrowserRouter>` 和 `<HashRouter>` 路由对象。它们都具有 `history` 对象，其区别在于 `<BrowserRouter>` 能够相应客户的动态请求requests; 而 `<HashRouter>` 提供的是静态文件服务器。
 
 ```jsx
 import { BrowserRouter } from "react-router-dom";
 ReactDOM.render(
   <BrowserRouter>
     <App />
-  </BrowserRouter>,
-  holder
+  </BrowserRouter>
 );
 ```
 
-## Route Matching
 
-There are two route matching components: `<Route>` and `<Switch>`.
+[slide]
+# BrowserRouter
+
+`<BrowserRouter>` 使用 HTML5 提供的 history API (`pushState`, `replaceState` 和 `popstate` 事件) 来保持 UI 和 URL 的同步。
+
+```jsx
+import { BrowserRouter } from 'react-router-dom';
+
+<BrowserRouter
+  basename={string}
+  forceRefresh={bool}
+  getUserConfirmation={func}
+  keyLength={number}
+>
+  <App />
+</BrowserRouter>
+```
+
+[slide]
+
+**basename: string** 所有位置的基准 URL。如果你的应用程序部署在服务器的子目录，则需要将其设置为子目录。basename 的正确格式是前面有一个前导斜杠，但不能有尾部斜杠。
+
+```jsx
+<BrowserRouter basename="/calendar">
+  <Link to="/today" />
+</BrowserRouter>
+```
+
+上例中的 `<Link>` 最终将被呈现为： `<a href="/calendar/today" />`
+
+
+[slide]
+**forceRefresh: bool** 如果为 true ，在导航的过程中整个页面将会刷新。一般情况下，只有在不支持 HTML5 history API 的浏览器中使用此功能。
+
+```jsx
+const supportsHistory = 'pushState' in window.history;
+
+<BrowserRouter forceRefresh={!supportsHistory} />
+```
+
+[slide]
+**getUserConfirmation: func** 用于确认导航的函数，默认使用 `window.confirm`。例如，当从 `/a` 导航至 `/b` 时，会使用默认的 `confirm` 函数弹出一个提示，用户点击确定后才进行导航，否则不做任何处理。注：需要配合 `<Prompt>` 一起使用。
+
+```jsx
+// 这是默认的确认函数
+const getConfirmation = (message, callback) => {
+  const allowTransition = window.confirm(message);
+  callback(allowTransition);
+}
+<BrowserRouter getUserConfirmation={getConfirmation} />
+```
+
+[slide]
+**keyLength: number** `location.key` 的长度，默认为 6。
+
+```jsx
+<BrowserRouter keyLength={12} />
+```
+
+
+[slide]
+# HashRouter
+`<HashRouter>` 使用 `URL` 的 `hash` 部分（即 `window.location.hash`）来保持 UI 和 URL 的同步。
+
+```jsx
+import { HashRouter } from 'react-router-dom';
+<HashRouter>
+  <App />
+</HashRouter>
+```
+
+
+[slide]
+**basename: string**: 所有位置的基准 URL。basename 的正确格式是前面有一个前导斜杠，但不能有尾部斜杠。
+```jsx
+<HashRouter basename="/calendar">
+  <Link to="/today" />
+</HashRouter>
+```
+上例中的 <Link> 最终将被呈现为：`<a href="#/calendar/today" />`
+
+
+[slide]
+**getUserConfirmation: func**: 用于确认导航的函数，默认使用 `window.confirm`。
+
+```jsx
+// 这是默认的确认函数
+const getConfirmation = (message, callback) => {
+  const allowTransition = window.confirm(message);
+  callback(allowTransition);
+}
+<HashRouter getUserConfirmation={getConfirmation} />
+```
+
+
+[slide]
+**hashType: string**: `window.location.hash` 使用的 `hash` 类型，默认`slash`, 有如下几种：
+
+- slash:  后面跟一个斜杠，例如 `#/` 和 `#/sunshine/lollipops`
+- noslash:  后面没有斜杠，例如 `#` 和 `#sunshine/lollipops`
+- hashbang:  Google 风格的 ajax crawlable，例如 `#!/` 和 `#!/sunshine/lollipops`
+
+
+[slide]
+## 路由匹配
+路由匹配对象有两种: `<Route>` 和 `<Switch>`.
 
 ```js
 import { Route, Switch } from "react-router-dom";
 ```
+通过匹配路由的路径属性`path`，是否和当前的地址`pathname`相同，如果匹配则渲染它的内容，否则渲染 `null`。
 
-Route matching is done by comparing a `<Route>`'s `path` prop to the current location's `pathname`. When a `<Route>` matches it will render its content and when it does not match, it will render `null`. A `<Route>` with no path will always match.
 
+[slide]
 ```jsx
 // when location = { pathname: '/about' }
 <Route path='/about' component={About}/> // renders <About/>
@@ -128,7 +233,9 @@ Route matching is done by comparing a `<Route>`'s `path` prop to the current loc
 <Route component={Always}/> // renders <Always/>
 ```
 
-You can include a `<Route>` anywhere that you want to render content based on the location. It will often make sense to list a number of possible `<Route>`s next to each other. The `<Switch>` component is used to group `<Route>`s together.
+
+[slide]
+我们可以使用 `<Route>` 来实现根据路径渲染内容，通常都是多个`<Route>`排列在一起，这个时候可以用 `<Switch>` 对象把它们组合到一起。
 
 ```jsx
 <Switch>
@@ -138,58 +245,199 @@ You can include a `<Route>` anywhere that you want to render content based on th
 </Switch>
 ```
 
-The `<Switch>` is not required for grouping `<Route>`s, but it can be quite useful. A `<Switch>` will iterate over all of its children `<Route>` elements and only render the first one that matches the current location. This helps when multiple route's paths match the same pathname, when animating transitions between routes, and in identifying when no routes match the current location (so that you can render a "404" component).
+
+[slide]
+对于一组 `<Route>` 来说，不是必须添加 `<Switch>` 对象，但是 `<Switch>` 的功能是`仅仅只会渲染匹配到的第一个路径`。 因此如果有多个路由路径都匹配的同样的路径名称，或者没有匹配到任何目前的路径("404")，就可以通过`<Switch>`处理。
 
 ```jsx
 <Switch>
   <Route exact path="/" component={Home} />
   <Route path="/about" component={About} />
   <Route path="/contact" component={Contact} />
-  {/* when none of the above match, <NoMatch> will be rendered */}
   <Route component={NoMatch} />
 </Switch>
 ```
 
-## Route Rendering Props
 
-You have three prop choices for how you render a component for a given `<Route>`: `component`, `render`, and `children`. You can check out the [`<Route>` documentation](../api/Route.md) for more information on each one, but here we'll focus on `component` and `render` because those are the two you will almost always use.
+[slide] 
+# Route
+`<Route>` 的基本功能是在其 `path` 属性与某个 `location` 匹配时呈现一些 UI。
+```html
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+<Router>
+  <div>
+    <Route exact path="/" component={Home} />
+    <Route path="/news" component={News} />
+  </div>
+</Router>
 
-`component` should be used when you have an existing component (either a `React.Component` or a stateless functional component) that you want to render. `render`, which takes an inline function, should only be used when you have to pass in-scope variables to the component you want to render. You should **not** use the `component` prop with an inline function to pass in-scope variables because you will get undesired component unmounts/remounts.
+<!-- 如果应用程序的位置是 / -->
+<div>
+  <Home />
+  <!-- react-empty: 2 -->
+</div>
 
-```jsx
-const Home = () => <div>Home</div>;
-
-const App = () => {
-  const someVariable = true;
-
-  return (
-    <Switch>
-      {/* these are good */}
-      <Route exact path="/" component={Home} />
-      <Route
-        path="/about"
-        render={props => <About {...props} extra={someVariable} />}
-      />
-      {/* do not do this */}
-      <Route
-        path="/contact"
-        component={props => <Contact {...props} extra={someVariable} />}
-      />
-    </Switch>
-  );
-};
+<!-- 如果应用程序的位置是 /news -->
+<div>
+  <!-- react-empty: 1 -->
+  <News />
+</div>
 ```
 
-## Navigation
 
-React Router provides a `<Link>` component to create links in your application. Wherever you render a `<Link>`, an anchor (`<a>`) will be rendered in your application's HTML.
+[slide] 
+# 路由渲染方法
+使用 <Route> 渲染一些内容有以下三种方式：
+
+- `<Route component>`
+- `<Route render>`
+- `<Route children>`
+
+三种渲染方式都将提供相同的三个路由属性
+
+- match
+- location
+- history
+
+[slide] 
+# component
+
+当你使用 `component` 时，`Router` 将根据指定的组件，使用 `React.createElement` 创建一个新的 `React` 元素。这意味着，如果你向 `component` 提供一个内联函数，那么每次渲染都会创建一个新组件。这将导致现有组件的卸载和新组件的安装，而不是仅仅更新现有组件。当使用内联函数进行内联渲染时，请使用 `render` 或 `children`。
 
 ```jsx
+const User = ({ match }) => {
+  return <h1>Hello {match.params.username}!</h1>
+}
+<Route path="/user/:username" component={User} />
+```
+
+
+[slide] 
+# render: func
+使用 `render` 可以方便地进行内联渲染和包装，而无需进行上文解释的不必要的组件重装。
+
+你可以传入一个函数，以在位置匹配时调用，而不是使用 `component` 创建一个新的 `React` 元素。`render` 渲染方式接收所有与 `component` 方式相同的 `route props`。
+```html
+// 方便的内联渲染
+<Route path="/home" render={() => <div>Home</div>} />
+```
+
+
+[slide] 
+# children: func
+有时候不论 `path` 是否匹配位置，你都想渲染一些内容。在这种情况下，你可以使用 `children` 属性。除了不论是否匹配它都会被调用以外，它的工作原理与 `render` 完全一样。
+
+`children` 渲染方式接收所有与 `component` 和 `render` 方式相同的 `route props`，除非路由与 URL 不匹配，不匹配时 `match` 为 `null`。这允许你可以根据路由是否匹配动态地调整用户界面。如下所示，如果路由匹配，我们将添加一个激活类：
+
+```html
+const ListItemLink = ({ to, ...rest }) => (
+  <Route path={to} children={({ match }) => (
+    <li className={match ? 'active' : ''}>
+      <Link to={to} {...rest} />
+    </li>
+  )} />
+)
+<ul>
+  <ListItemLink to="/home"> home  </ListItemLink>
+  <ListItemLink to="/about"> about  </ListItemLink>
+</ul>
+```
+
+
+
+[slide] 
+# path: string
+`path: string`可以是 `path-to-regexp` 能够理解的任何有效的 URL 路径。
+```html
+<Route path="/users/:id" component={User} />
+```
+
+> 没有定义 path 的 <Route> 总是会被匹配。
+
+
+[slide] 
+# exact: bool
+`exact: bool` 如果为 `true`，则只有在 `path` 完全匹配 `location.pathname` 时才匹配。
+
+```bash
+# path  location.pathname  exact  matches
+# /one  /one/two           true   no
+# /one  /one/two           false  yes
+
+<Route exact path="/one" component={OneComponent} />
+```
+
+
+[slide] 
+# strict: bool
+`strict: bool` 如果为 `true`，则具有尾部斜杠的 `path` 仅与具有尾部斜杠的 `location.pathname` 匹配。当 `location.pathname` 中有附加的 URL 片段时，`strict` 就没有效果了。
+
+```bash
+# path   location.pathname  matches
+# /one/  /one               no
+# /one/  /one/              yes
+# /one/  /one/two           yes
+
+<Route strict path="/one/" component={OneComponent} />
+```
+
+[slide] 
+
+> 警告：可以使用 `strict` 来强制规定 `location.pathname` 不能具有尾部斜杠，但是为了做到这一点，`strict` 和 `exact` 必须都是 true。
+
+```bash
+# path   location.pathname  matches
+# /one   /one               yes
+# /one   /one/              no
+# /one   /one/two           no
+
+<Route strict path="/one/" component={OneComponent} />
+```
+
+
+[slide] 
+# location: object
+`location: object` 一般情况下，`<Route>` 尝试将其 `path` 与当前历史位置（通常是当前的浏览器 URL）进行匹配。但是，也可以传递具有不同路径名的位置进行匹配。
+
+当你需要将 `<Route>` 与当前历史位置以外的 `location` 进行匹配时，此功能非常有用。如过渡动画示例中所示。
+
+如果一个 `<Route>` 被包含在一个 `<Switch>` 中，并且需要匹配的位置（或当前历史位置）传递给了 `<Switch>`，那么传递给 `<Route>` 的 `location` 将被 `<Switch>` 所使用的 `location` 覆盖。
+
+[slide] 
+# sensitive: bool
+`sensitive: bool` 如果为 `true`，进行匹配时将区分大小写。
+
+```html
+# path   location.pathname  sensitive  matches
+# /one   /one               true       yes
+# /One   /one               true       no
+# /One   /one/              false      yes
+
+<Route sensitive path="/one" component={OneComponent} />
+```
+
+
+[slide] 
+# Link
+React路由提供了 `<Link>` 对象来创建连接，它类似HTML的`a`对象。它的 `to`、`query`、`hash` 属性会被组合在一起并渲染为 `href` 属性。虽然 `Link` 被渲染为超链接，但在内部实现上使用脚本拦截了浏览器的默认行为，然后调用了`history.pushState` 方法（注意，文中出现的 `history` 指的是通过 `history` 包里面的 `create History` 方法创建的对象，`window.history` 则指定浏览器原生的 `history` 对象，由于有些 API 相同，不要弄混）。`history` 包中底层的 `pushState` 方法支持传入两个参数 `state` 和 `path`，在函数体内有将这两个参数传输到 `createLocation` 方法中，返回 `location` 。系统将 `location` 对象作为参数传入到 `TransitionTo` 方法中，然后调用 `window.location.hash` 或者`window.history.pushState()` 修改了应用的 URL，这取决于你创建 `history` 对象的方式。同时会触发`history.listen` 中注册的事件监听器。
+
+```html
+import { Link } from 'react-router-dom';
+
 <Link to="/">Home</Link>
 // <a href='/'>Home</a>
 ```
 
-The `<NavLink>` is a special type of `<Link>` that can style itself as "active" when its `to` prop matches the current location.
+
+[slide] 
+# NavLink
+`NavLink` 是 `Link` 的一个特定版本，会在匹配上当前的url的时候给已经渲染的元素添加参数，组件的属性有:
+
+- activeClassName(string)：设置选中样式，默认值为active
+- activeStyle(object)：当元素被选中时，为此元素添加样式
+- exact(bool)：为true时，只有当导致和完全匹配class和style才会应用
+- strict(bool)：为true时, 将考虑位置pathname后的斜线
+- isActive(func)判断链接是否激活的额外逻辑的功能
 
 ```jsx
 // location = { pathname: '/react' }
@@ -199,750 +447,67 @@ The `<NavLink>` is a special type of `<Link>` that can style itself as "active" 
 // <a href='/react' className='hurray'>React</a>
 ```
 
-Any time that you want to force navigation, you can render a `<Redirect>`. When a `<Redirect>` renders, it will navigate using its `to` prop.
 
-```jsx
-<Redirect to="/login" />
+[slide] 
+# Redirect
+如果要强制跳转的话，可以渲染 `<Redirect>`对象，并且使用 `to` 说明跳转连接。
+
+```html
+import { Route, Redirect } from 'react-router-dom';
+<Route exact path="/" render={() => (
+  loggedIn ? (
+    <Redirect to="/dashboard" />
+  ) : (
+    <PublicHomePage />
+  )
+)} />
 ```
 
 
+[slide] 
+# 动态路由
 
-
-
-
-
-
-
-
-# Server Rendering
-
-Rendering on the server is a bit different since it's all stateless. The basic idea is that we wrap the app in a stateless [`<StaticRouter>`][staticrouter] instead of a [`<BrowserRouter>`][browserrouter]. We pass in the requested url from the server so the routes can match and a `context` prop we'll discuss next.
-
-```jsx
-// client
-<BrowserRouter>
-  <App/>
-</BrowserRouter>
-
-// server (not the complete story)
-<StaticRouter
-  location={req.url}
-  context={context}
->
-  <App/>
-</StaticRouter>
-```
-
-When you render a [`<Redirect>`][redirect] on the client, the browser history changes state and we get the new screen. In a static server environment we can't change the app state. Instead, we use the `context` prop to find out what the result of rendering was. If we find a `context.url`, then we know the app redirected. This allows us to send a proper redirect from the server.
-
-```jsx
-const context = {};
-const markup = ReactDOMServer.renderToString(
-  <StaticRouter location={req.url} context={context}>
-    <App />
-  </StaticRouter>
-);
-
-if (context.url) {
-  // Somewhere a `<Redirect>` was rendered
-  redirect(301, context.url);
-} else {
-  // we're good, send the response
-}
-```
-
-## Adding app specific context information
-
-The router only ever adds `context.url`. But you may want some redirects to be 301 and others 302. Or maybe you'd like to send a 404 response if some specific branch of UI is rendered, or a 401 if they aren't authorized. The context prop is yours, so you can mutate it. Here's a way to distinguish between 301 and 302 redirects:
-
-```jsx
-const RedirectWithStatus = ({ from, to, status }) => (
-  <Route
-    render={({ staticContext }) => {
-      // there is no `staticContext` on the client, so
-      // we need to guard against that here
-      if (staticContext) staticContext.status = status;
-      return <Redirect from={from} to={to} />;
-    }}
-  />
-);
-
-// somewhere in your app
-const App = () => (
-  <Switch>
-    {/* some other routes */}
-    <RedirectWithStatus status={301} from="/users" to="/profiles" />
-    <RedirectWithStatus status={302} from="/courses" to="/dashboard" />
-  </Switch>
-);
-
-// on the server
-const context = {};
-
-const markup = ReactDOMServer.renderToString(
-  <StaticRouter context={context}>
-    <App />
-  </StaticRouter>
-);
-
-if (context.url) {
-  // can use the `context.status` that
-  // we added in RedirectWithStatus
-  redirect(context.status, context.url);
-}
-```
-
-## 404, 401, or any other status
-
-We can do the same thing as above. Create a component that adds some context and render it anywhere in the app to get a different status code.
-
-```jsx
-const Status = ({ code, children }) => (
-  <Route
-    render={({ staticContext }) => {
-      if (staticContext) staticContext.status = code;
-      return children;
-    }}
-  />
-);
-```
-
-Now you can render a `Status` anywhere in the app that you want to add the code to `staticContext`.
-
-```jsx
-const NotFound = () => (
-  <Status code={404}>
-    <div>
-      <h1>Sorry, can’t find that.</h1>
-    </div>
-  </Status>
-)
-
-// somewhere else
-<Switch>
-  <Route path="/about" component={About}/>
-  <Route path="/dashboard" component={Dashboard}/>
-  <Route component={NotFound}/>
-</Switch>
-```
-
-## Putting it all together
-
-This isn't a real app, but it shows all of the general pieces you'll
-need to put it all together.
-
-```jsx
-import { createServer } from "http";
-import React from "react";
-import ReactDOMServer from "react-dom/server";
-import { StaticRouter } from "react-router";
-import App from "./App";
-
-createServer((req, res) => {
-  const context = {};
-
-  const html = ReactDOMServer.renderToString(
-    <StaticRouter location={req.url} context={context}>
-      <App />
-    </StaticRouter>
-  );
-
-  if (context.url) {
-    res.writeHead(301, {
-      Location: context.url
-    });
-    res.end();
-  } else {
-    res.write(`
-      <!doctype html>
-      <div id="app">${html}</div>
-    `);
-    res.end();
-  }
-}).listen(3000);
-```
-
-And then the client:
-
-```jsx
-import ReactDOM from "react-dom";
+```html
 import { BrowserRouter } from "react-router-dom";
-import App from "./App";
-
-ReactDOM.render(
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>,
-  document.getElementById("app")
-);
-```
-
-## Data Loading
-
-There are so many different approaches to this, and there's no clear best practice yet, so we seek to be composable with any approach, and not prescribe or lean toward one or the other. We're confident the router can fit inside the constraints of your application.
-
-The primary constraint is that you want to load data before you render. React Router exports the `matchPath` static function that it uses internally to match locations to routes. You can use this function on the server to help determine what your data dependencies will be before rendering.
-
-The gist of this approach relies on a static route config used to both render your routes and match against before rendering to determine data dependencies.
-
-```js
-const routes = [
-  {
-    path: "/",
-    component: Root,
-    loadData: () => getSomeData()
-  }
-  // etc.
-];
-```
-
-Then use this config to render your routes in the app:
-
-```jsx
-import { routes } from "./routes";
-
-const App = () => (
-  <Switch>
-    {routes.map(route => (
-      <Route {...route} />
-    ))}
-  </Switch>
-);
-```
-
-Then on the server you'd have something like:
-
-```js
-import { matchPath } from "react-router-dom";
-
-// inside a request
-const promises = [];
-// use `some` to imitate `<Switch>` behavior of selecting only
-// the first to match
-routes.some(route => {
-  // use `matchPath` here
-  const match = matchPath(req.path, route);
-  if (match) promises.push(route.loadData(match));
-  return match;
-});
-
-Promise.all(promises).then(data => {
-  // do something w/ the data so the client
-  // can access it then render the app
-});
-```
-
-And finally, the client will need to pick up the data. Again, we aren't in the business of prescribing a data loading pattern for your app, but these are the touch points you'll need to implement.
-
-You might be interested in our [React Router Config][rrc] package to assist with data loading and server rendering with static route configs.
-
-[staticrouter]: ../api/StaticRouter.md
-[browserrouter]: ../api/BrowserRouter.md
-[redirect]: ../api/Redirect.md
-[rrc]: https://github.com/ReactTraining/react-router/tree/master/packages/react-router-config
-
-
-
-
-
-
-
-
-
-
-
-
-# Code Splitting
-
-One great feature of the web is that we don't have to make our visitors download the entire app before they can use it. You can think of code splitting as incrementally downloading the app. To accomplish this we'll use [webpack], [`@babel/plugin-syntax-dynamic-import`], and [`react-loadable`].
-
-[webpack] has built-in support for [dynamic imports][import]; however, if you are using [Babel] (e.g., to compile JSX to JavaScript) then you will need to use the [`@babel/plugin-syntax-dynamic-import`] plugin. This is a syntax-only plugin, meaning Babel won't do any additional transformations. The plugin simply allows Babel to parse dynamic imports so webpack can bundle them as a code split. Your `.babelrc` should look something like this:
-
-```json
-{
-  "presets": ["@babel/react"],
-  "plugins": ["@babel/plugin-syntax-dynamic-import"]
-}
-```
-
-[`react-loadable`] is a higher-order component for loading components with dynamic imports. It handles all sorts of edge cases automatically and makes code splitting simple! Here's an example of how to use [`react-loadable`]:
-
-```jsx
-import Loadable from "react-loadable";
-import Loading from "./Loading";
-
-const LoadableComponent = Loadable({
-  loader: () => import("./Dashboard"),
-  loading: Loading
-});
-
-export default class LoadableDashboard extends React.Component {
-  render() {
-    return <LoadableComponent />;
-  }
-}
-```
-
-That's all there is to it! Simply use `LoadableDashboard` (or whatever you named your component) and it will automatically be loaded and rendered when you use it in your application. The `loader` option is a function which actually loads the component, and `loading` is a placeholder component to show while the real component is loading.
-
-## Code Splitting and Server-Side Rendering
-
-[`react-loadable`] includes [a guide for server-side rendering][ssr]. All you should need to do is include [`babel-plugin-import-inspector`] in your `.babelrc` and server-side rendering should just work™. Here is an example `.babelrc` file:
-
-```json
-{
-  "presets": ["@babel/react"],
-  "plugins": [
-    "@babel/plugin-syntax-dynamic-import",
-    [
-      "import-inspector",
-      {
-        "serverSideRequirePath": true
-      }
-    ]
-  ]
-}
-```
-
-[babel]: https://babeljs.io/
-[`@babel/plugin-syntax-dynamic-import`]: https://babeljs.io/docs/plugins/syntax-dynamic-import/
-[`babel-plugin-import-inspector`]: https://github.com/thejameskyle/react-loadable/tree/6902cc87f618446c54daa85d8fecec6836c9461a#babel-plugin-import-inspector
-[`react-loadable`]: https://github.com/thejameskyle/react-loadable
-[import]: https://github.com/tc39/proposal-dynamic-import
-[webpack]: https://webpack.js.org/
-[ssr]: https://github.com/thejameskyle/react-loadable/tree/6902cc87f618446c54daa85d8fecec6836c9461a#server-side-rendering
-
-
-
-
-
-
-
-
-
-
-
-
-# Scroll Restoration
-
-In earlier versions of React Router we provided out-of-the-box support for scroll restoration and people have been asking for it ever since. Hopefully this document helps you get what you need out of the scroll bar and routing!
-
-Browsers are starting to handle scroll restoration with `history.pushState` on their own in the same manner they handle it with normal browser navigation. It already works in chrome and it's really great. [Here's the Scroll Restoration Spec](https://majido.github.io/scroll-restoration-proposal/history-based-api.html#web-idl).
-
-Because browsers are starting to handle the "default case" and apps have varying scrolling needs (like this website!), we don't ship with default scroll management. This guide should help you implement whatever scrolling needs you have.
-
-## Scroll to top
-
-Most of the time all you need is to "scroll to the top" because you have a long content page, that when navigated to, stays scrolled down. This is straightforward to handle with a `<ScrollToTop>` component that will scroll the window up on every navigation, make sure to wrap it in `withRouter` to give it access to the router's props:
-
-```jsx
-class ScrollToTop extends Component {
-  componentDidUpdate(prevProps) {
-    if (this.props.location.pathname !== prevProps.location.pathname) {
-      window.scrollTo(0, 0);
-    }
-  }
-
-  render() {
-    return this.props.children;
-  }
-}
-
-export default withRouter(ScrollToTop);
-```
-
-Then render it at the top of your app, but below Router
-
-```jsx
-const App = () => (
-  <Router>
-    <ScrollToTop>
-      <App/>
-    </ScrollToTop>
-  </Router>
-)
-
-// or just render it bare anywhere you want, but just one :)
-<ScrollToTop/>
-```
-
-If you have a tab interface connected to the router, then you probably don't want to be scrolling to the top when they switch tabs. Instead, how about a `<ScrollToTopOnMount>` in the specific places you need it?
-
-```jsx
-class ScrollToTopOnMount extends Component {
-  componentDidMount() {
-    window.scrollTo(0, 0);
-  }
-
-  render() {
-    return null;
-  }
-}
-
-class LongContent extends Component {
-  render() {
-    <div>
-      <ScrollToTopOnMount />
-      <h1>Here is my long content page</h1>
-    </div>;
-  }
-}
-
-// somewhere else
-<Route path="/long-content" component={LongContent} />;
-```
-
-## Generic Solution
-
-For a generic solution (and what browsers are starting to implement natively) we're talking about two things:
-
-1. Scrolling up on navigation so you don't start a new screen scrolled to the bottom
-2. Restoring scroll positions of the window and overflow elements on "back" and "forward" clicks (but not Link clicks!)
-
-At one point we were wanting to ship a generic API. Here's what we were headed toward:
-
-```jsx
-<Router>
-  <ScrollRestoration>
-    <div>
-      <h1>App</h1>
-
-      <RestoredScroll id="bunny">
-        <div style={{ height: "200px", overflow: "auto" }}>I will overflow</div>
-      </RestoredScroll>
-    </div>
-  </ScrollRestoration>
-</Router>
-```
-
-First, `ScrollRestoration` would scroll the window up on navigation. Second, it would use `location.key` to save the window scroll position _and_ the scroll positions of `RestoredScroll` components to `sessionStorage`. Then, when `ScrollRestoration` or `RestoredScroll` components mount, they could look up their position from `sessionsStorage`.
-
-What got tricky for me was defining an "opt-out" API for when I didn't want the window scroll to be managed. For example, if you have some tab navigation floating inside the content of your page you probably _don't_ want to scroll to the top (the tabs might be scrolled out of view!).
-
-When I learned that chrome manages scroll position for us now, and realized that different apps are going to have different scrolling needs, I kind of lost the belief that we needed to provide something--especially when people just want to scroll to the top (which you saw is straight-forward to add to your app on your own).
-
-Based on this, we no longer feel strongly enough to do the work ourselves (like you we have limited time!). But, we'd love to help anybody who feels inclined to implement a generic solution. A solid solution could even live in the project. Hit us up if you get started on it :)
-
-
-
-
-
-# Philosophy
-
-This guide's purpose is to explain the mental model to have when using React Router. We call it "Dynamic Routing", which is quite different from the "Static Routing" you're probably more familiar with.
-
-## Static Routing
-
-If you've used Rails, Express, Ember, Angular etc. you've used static routing. In these frameworks, you declare your routes as part of your app's initialization before any rendering takes place. React Router pre-v4 was also static (mostly). Let's take a look at how to configure routes in express:
-
-```js
-// Express Style routing:
-app.get("/", handleIndex);
-app.get("/invoices", handleInvoices);
-app.get("/invoices/:id", handleInvoice);
-app.get("/invoices/:id/edit", handleInvoiceEdit);
-
-app.listen();
-```
-
-Note how the routes are declared before the app listens. The client side routers we've used are similar. In Angular you declare your routes up front and then import them to the top-level `AppModule` before rendering:
-
-```js
-// Angular Style routing:
-const appRoutes: Routes = [
-  {
-    path: "crisis-center",
-    component: CrisisListComponent
-  },
-  {
-    path: "hero/:id",
-    component: HeroDetailComponent
-  },
-  {
-    path: "heroes",
-    component: HeroListComponent,
-    data: { title: "Heroes List" }
-  },
-  {
-    path: "",
-    redirectTo: "/heroes",
-    pathMatch: "full"
-  },
-  {
-    path: "**",
-    component: PageNotFoundComponent
-  }
-];
-
-@NgModule({
-  imports: [RouterModule.forRoot(appRoutes)]
-})
-export class AppModule {}
-```
-
-Ember has a conventional `routes.js` file that the build reads and
-imports into the application for you. Again, this happens before
-your app renders.
-
-```js
-// Ember Style Router:
-Router.map(function() {
-  this.route("about");
-  this.route("contact");
-  this.route("rentals", function() {
-    this.route("show", { path: "/:rental_id" });
-  });
-});
-
-export default Router;
-```
-
-Though the APIs are different, they all share the model of "static routes". React Router also followed that lead up until v4.
-
-To be successful with React Router, you need to forget all that! :O
-
-## Backstory
-
-To be candid, we were pretty frustrated with the direction we'd taken React Router by v2. We (Michael and Ryan) felt limited by the API, recognized we were reimplementing parts of React (lifecycles, and more), and it just didn't match the mental model React has given us for composing UI.
-
-We were walking through the hallway of a hotel just before a workshop discussing what to do about it. We asked each other: "What would it look like if we built the router using the patterns we teach in our workshops?"
-
-It was only a matter of hours into development that we had a proof-of-concept that we knew was the future we wanted for routing. We ended up with API that wasn't "outside" of React, an API that composed, or naturally fell into place, with the rest of React. We think you'll love it.
-
-## Dynamic Routing
-
-When we say dynamic routing, we mean routing that takes place **as your app is rendering**, not in a configuration or convention outside of a running app. That means almost everything is a component in React Router. Here's a 60 second review of the API to see how it works:
-
-First, grab yourself a `Router` component for the environment you're targeting and render it at the top of your app.
-
-```jsx
-// react-native
-import { NativeRouter } from "react-router-native";
-
-// react-dom (what we'll use here)
-import { BrowserRouter } from "react-router-dom";
-
 ReactDOM.render(
   <BrowserRouter>
     <App />
   </BrowserRouter>,
   el
 );
-```
 
-Next, grab the link component to link to a new location:
-
-```jsx
 const App = () => (
   <div>
-    <nav>
-      <Link to="/dashboard">Dashboard</Link>
-    </nav>
+    <nav><Link to="/dashboard">Dashboard</Link></nav>
+    <div><Route path="/dashboard" component={Dashboard}/></div>
   </div>
 );
 ```
 
-Finally, render a `Route` to show some UI when the user visits
-`/dashboard`.
 
-```jsx
-const App = () => (
-  <div>
-    <nav>
-      <Link to="/dashboard">Dashboard</Link>
-    </nav>
-    <div>
-      <Route path="/dashboard" component={Dashboard} />
-    </div>
-  </div>
-);
-```
+[slide] 
+# 嵌套路由
 
-The `Route` will render `<Dashboard {...props}/>` where `props` are some router specific things that look like `{ match, location, history }`. If the user is **not** at `/dashboard` then the `Route` will render `null`. That's pretty much all there is to it.
-
-## Nested Routes
-
-Lots of routers have some concept of "nested routes". If you've used versions of React Router previous to v4, you'll know it did too! When you move from a static route configuration to dynamic, rendered routes, how do you "nest routes"? Well, how do you nest a `div`?
-
-```jsx
+```html
 const App = () => (
   <BrowserRouter>
-    {/* here's a div */}
     <div>
-      {/* here's a Route */}
-      <Route path="/tacos" component={Tacos} />
+      <Route path="/topic" component={Topic} />
     </div>
   </BrowserRouter>
 );
 
-// when the url matches `/tacos` this component renders
-const Tacos = ({ match }) => (
-  // here's a nested div
+const Topic = ({ match }) => (
   <div>
-    {/* here's a nested Route,
-        match.url helps us make a relative path */}
+    <!-- 嵌套路由的 match.url 生成相对路径  -->
     <Route path={match.url + "/carnitas"} component={Carnitas} />
   </div>
 );
 ```
 
-See how the router has no "nesting" API? `Route` is just a component, just like `div`. So to nest a `Route` or a `div`, you just ... do it.
 
-Let's get trickier.
-
-## Responsive Routes
-
-Consider a user navigates to `/invoices`. Your app is adaptive to different screen sizes, they have a narrow viewport, and so you only show them the list of invoices and a link to the invoice dashboard. They can navigate deeper from there.
-
-```asciidoc
-Small Screen
-url: /invoices
-
-+----------------------+
-|                      |
-|      Dashboard       |
-|                      |
-+----------------------+
-|                      |
-|      Invoice 01      |
-|                      |
-+----------------------+
-|                      |
-|      Invoice 02      |
-|                      |
-+----------------------+
-|                      |
-|      Invoice 03      |
-|                      |
-+----------------------+
-|                      |
-|      Invoice 04      |
-|                      |
-+----------------------+
-```
-
-On a larger screen we'd like to show a master-detail view where the navigation is on the left and the dashboard or specific invoices show up on the right.
-
-```asciidoc
-Large Screen
-url: /invoices/dashboard
-
-+----------------------+---------------------------+
-|                      |                           |
-|      Dashboard       |                           |
-|                      |   Unpaid:             5   |
-+----------------------+                           |
-|                      |   Balance:   $53,543.00   |
-|      Invoice 01      |                           |
-|                      |   Past Due:           2   |
-+----------------------+                           |
-|                      |                           |
-|      Invoice 02      |                           |
-|                      |   +-------------------+   |
-+----------------------+   |                   |   |
-|                      |   |  +    +     +     |   |
-|      Invoice 03      |   |  | +  |     |     |   |
-|                      |   |  | |  |  +  |  +  |   |
-+----------------------+   |  | |  |  |  |  |  |   |
-|                      |   +--+-+--+--+--+--+--+   |
-|      Invoice 04      |                           |
-|                      |                           |
-+----------------------+---------------------------+
-```
-
-Now pause for a minute and think about the `/invoices` url for both screen sizes. Is it even a valid route for a large screen? What should we put on the right side?
-
-```asciidoc
-Large Screen
-url: /invoices
-+----------------------+---------------------------+
-|                      |                           |
-|      Dashboard       |                           |
-|                      |                           |
-+----------------------+                           |
-|                      |                           |
-|      Invoice 01      |                           |
-|                      |                           |
-+----------------------+                           |
-|                      |                           |
-|      Invoice 02      |             ???           |
-|                      |                           |
-+----------------------+                           |
-|                      |                           |
-|      Invoice 03      |                           |
-|                      |                           |
-+----------------------+                           |
-|                      |                           |
-|      Invoice 04      |                           |
-|                      |                           |
-+----------------------+---------------------------+
-```
-
-On a large screen, `/invoices` isn't a valid route, but on a small screen it is! To make things more interesting, consider somebody with a giant phone. They could be looking at `/invoices` in portrait orientation and then rotate their phone to landscape. Suddenly, we have enough room to show the master-detail UI, so you ought to redirect right then!
-
-React Router's previous versions' static routes didn't really have a composable answer for this. When routing is dynamic, however, you can declaratively compose this functionality. If you start thinking about routing as UI, not as static configuration, your intuition will lead you to the following code:
-
-```js
-const App = () => (
-  <AppLayout>
-    <Route path="/invoices" component={Invoices} />
-  </AppLayout>
-);
-
-const Invoices = () => (
-  <Layout>
-    {/* always show the nav */}
-    <InvoicesNav />
-
-    <Media query={PRETTY_SMALL}>
-      {screenIsSmall =>
-        screenIsSmall ? (
-          // small screen has no redirect
-          <Switch>
-            <Route exact path="/invoices/dashboard" component={Dashboard} />
-            <Route path="/invoices/:id" component={Invoice} />
-          </Switch>
-        ) : (
-          // large screen does!
-          <Switch>
-            <Route exact path="/invoices/dashboard" component={Dashboard} />
-            <Route path="/invoices/:id" component={Invoice} />
-            <Redirect from="/invoices" to="/invoices/dashboard" />
-          </Switch>
-        )
-      }
-    </Media>
-  </Layout>
-);
-```
-
-As the user rotates their phone from portrait to landscape, this code will automatically redirect them to the dashboard. _The set of valid routes change depending on the dynamic nature of a mobile device in a user's hands_.
-
-This is just one example. There are many others we could discuss but we'll sum it up with this advice: To get your intuition in line with React Router's, think about components, not static routes. Think about how to solve the problem with React's declarative composability because nearly every "React Router question" is probably a "React question".
-
-
-
-
-
-
-
-
-
-# Redux Integration
-
-Redux is an important part of the React ecosystem. We want to make the integration of React Router and Redux as seamless as possible for people wanting to use both.
-
-## Blocked Updates
-
-Generally, React Router and Redux work just fine together. Occasionally though, an app can have a component that doesn't update when the location changes (child routes or active nav links don't update).
-
-This happens if:
-
-1. The component is connected to redux via `connect()(Comp)`.
-2. The component is **not** a "route component", meaning it is not
-   rendered like so: `<Route component={SomeConnectedThing}/>`
-
-The problem is that Redux implements `shouldComponentUpdate` and there's no indication that anything has changed if it isn't receiving props from the router. This is straightforward to fix. Find where you `connect` your component and wrap it in `withRouter`.
+[slide] 
+# Redux集成
 
 ```js
 // before
@@ -952,21 +517,3 @@ export default connect(mapStateToProps)(Something)
 import { withRouter } from 'react-router-dom'
 export default withRouter(connect(mapStateToProps)(Something))
 ```
-
-## Deep integration
-
-Some folks want to:
-
-1. Synchronize the routing data with, and accessed from, the store.
-2. Be able to navigate by dispatching actions.
-3. Have support for time travel debugging for route changes in the Redux devtools.
-
-All of this requires deeper integration.
-
-Our recommendation is **not to keep your routes in your Redux store at all**. Reasoning:
-
-1. Routing data is already a prop of most of your components that care about it. Whether it comes from the store or the router, your component's code is largely the same.
-2. In most cases, you can use `Link`, `NavLink` and `Redirect` to perform navigation actions. Sometimes you might also need to navigate programmatically, after some asynchronous task that was originally initiated by an action. For example, you might dispatch an action when the user submits a login form. Your [thunk](https://github.com/reduxjs/redux-thunk), [saga](https://redux-saga.js.org/) or other async handler then authenticates the credentials, _then_ it needs to somehow navigate to a new page if successful. The solution here is simply to include the `history` object (provided to all route components) in the payload of the action, and your async handler can use this to navigate when appropriate.
-3. Route changes are unlikely to matter for time travel debugging. The only obvious case is to debug issues with your router/store synchronization, and this problem goes away if you don't synchronize them at all.
-
-But if you feel strongly about synchronizing your routes with your store, you may want to try [Connected React Router](https://github.com/supasate/connected-react-router), a third party binding for React Router v4 and Redux.

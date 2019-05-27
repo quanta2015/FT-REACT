@@ -8,10 +8,16 @@ theme: light
 # 为什么学习 React 
 近年来，单页面应用（SPA，single page application）变得越来越流行。像 Angular、Ember 以及 Backbone 这些框架，帮助 JavaScript 开发者构建了超越纯 JavaScript（vanilla JavaScript）和 jQuery 的现代 Web 应用。这个流行的解决方案清单并不够详尽，现在仍然有大量的 SPA 框架。如果你去关注他们的发布日期的话，大部分都属于第一代 SPA Angular 发布于2010年，Backbone 发布于2010年，以及 Ember，发布于2011年。
 
+
+[slide]
 Facebook 在2013年首次发布了 React。React 并不是一个 SPA 框架，而是一个视图库。也就是 MVC（Model View Controller，模型-视图-控制器）里的 V。它的功能仅仅是把组件渲染成浏览器中的可见元素。但是，围绕 React 周边的整个生态系统让构建单页面应用成为可能。
 
+
+[slide]
 那么为什么你应该选 React 而不是其他第一代 SPA 框架呢？其他的第一代框架尝试一次性解决很多问题，而 React 仅仅帮助你构建视图层。它更多的是一个库而非框架。其背后的思路是：应用的视图应该是一系列层次分明的可组合的组件。
 
+
+[slide]
 通过使用 React，你可以在引入更多应用部件之前重点关注视图层。其他的每一个部件都是 SPA 的一部分。这所有的部分是构成一个成熟应用的基础。这样做有两个优点。
 
 - 首先，你可以按部就班地学习 SPA 的每一部分，不用担心要一次性理解全部，而其他的框架会在开始就需要你了解所有的内容。
@@ -21,6 +27,10 @@ Facebook 在2013年首次发布了 React。React 并不是一个 SPA 框架，�
 [slide]
 # 安装配置react应用
 将使用 `create-react-app` 来创建应用。在得到广泛支持的情况下，Facebook在2016年创建了这样一个零配置的 React 初始化套件。96%的人向初学者推荐了它。使用 `create-react-app`，各种工具和配置都会在后台集成，而开发人员只需要专注于实现就好。
+
+
+
+[slide]
 ```bash
 //安装配置react库
 npm install react react-dom
@@ -30,6 +40,8 @@ npm install -g create-react-app
 create-react-app newProj
 ```
 
+
+[slide]
 项目的文件结构如下：
 ```bash
 newProj/
@@ -50,12 +62,18 @@ newProj/
     └── serviceWorker.js
 ```
 
+
+[slide]
+
 - README.md: 后缀名为 .md 表示这是一个 markdown 文件。 很多源代码项目包含一个 README.md 文件，其中包含了这个项目的一些基本的指令和介绍。当你把项目发布到一些平台后，比如 GitHub，当在这个平台访问该项目的时候就会直接看到 README.md 里的内容。
-- node_modules: 这个文件夹包含了所有通过 npm 安装的 node 包。
-- package.json: 这个文件包含了 node 包依赖列表和一些其他的项目配置。
-- .gitignore: 这个文件包含了所有不应该添加到 git 仓库中的文件和文件夹。
-- public: 这个文件夹包含了所有你的项目构建出的产品文件。最终所有你写在 src 文件夹里面的代码都会在项目构建的时候被打包放在 public 文件夹下。
-- manifest.json 和 registerServiceWorker.js: 在这个阶段不用担心这些文件用来干什么，不会在这个项目中用到。
+- `node_modules`: 这个文件夹包含了所有通过 npm 安装的 node 包。
+- `package.json`: 这个文件包含了 node 包依赖列表和一些其他的项目配置。
+- `.gitignore`: 这个文件包含了所有不应该添加到 git 仓库中的文件和文件夹。
+- `public`: 这个文件夹包含了所有你的项目构建出的产品文件。最终所有你写在 src 文件夹里面的代码都会在项目构建的时候被打包放在 public 文件夹下。
+- `manifest.json` 和 `registerServiceWorker.js`: 在这个阶段不用担心这些文件用来干什么，不会在这个项目中用到。
+
+
+[slide]
 
 ```bash
 # 在 http://localhost:3000 启动应用
@@ -72,6 +90,8 @@ npm run build
 # React 核心思想
 React 的核心思想是：封装组件。各个组件维护自己的状态和 UI，当状态变更，自动重新渲染整个组件。基于这种方式的一个直观感受就是我们不再需要不厌其烦地来回查找某个 DOM 元素，然后操作 DOM 去更改 UI。
 
+
+[slide]
 React 大体包含下面这些概念：
 
 - 组件
@@ -81,7 +101,6 @@ React 大体包含下面这些概念：
 
 ```jsx
 import React, { Component } from 'react';
-
 // 以 class 初始化
 class App extends Component {
   render() {
@@ -89,7 +108,6 @@ class App extends Component {
     // return React.createElement('h1',null,'Hello world')
   }
 }
-
 // 以普通函数初始化
 const App = () => <h1>Hello world</h1>
 export default App;
@@ -101,8 +119,13 @@ export default App;
 # 组件 
 React 应用都是构建在组件之上。下面范例的 `HelloMsg` 就是一个React构建的组件，最后一句 `render` 会把这个组件显示到页面上的某个元素 `mountNode` 里面，显示的内容就是 `<div>Hello John</div>`。
 
+
+[slide]
+
 `props` 是组件的两个核心概念之一，另一个是 `state`。可以把 `props` 看作是组件的配置属性，在组件内部是不变的，只是在调用这个组件的时候传入不同的属性来定制显示这个组件。
 
+
+[slide]
 ```js
 import React, { Component } from 'react';
 import { render } from 'react-dom';

@@ -9,6 +9,8 @@ theme: light
 # 为什么要引入 JSX 这种语法
 传统的 MVC 是将模板放在其他地方，比如 `<script>` 标签或者模板文件，再在 JS 中通过某种手段引用模板。按照这种思路，想想多少次我们面对四处分散的模板片段不知所措？纠结模板引擎，纠结模板存放位置，纠结如何引用模板.
 
+
+[slide]
 简单来说，React 认为组件才是王道，而组件是和模板紧密关联的，组件模板和组件逻辑分离让问题复杂化了。显而易见的道理，关键是怎么做？
 
 所以就有了 `JSX` 这种语法，就是为了把 HTML 模板直接嵌入到 JS 代码里面，这样就做到了模板和组件关联，但是 JS 不支持这种包含 HTML 的语法，所以需要通过工具将 `JSX` 编译输出成 JS 代码才能使用。
@@ -23,6 +25,8 @@ theme: light
 React.createElement('a', {href: 'http://facebook.github.io/react/'}, 'Hello!')
 ```
 
+
+[slide]
 你可以通过 `React.createElement` 来构造组件的DOM树。第一个参数是标签名，第二个参数是属性对象，第三个参数是子元素。
 
 ```js
@@ -32,6 +36,8 @@ var root = React.createElement('ul', { className: 'my-list' }, child);
 React.render(root, document.body);
 ```
 
+
+[slide]
 对于常见的 HTML 标签，React 已经内置了工厂方法：
 ```js
 var root = React.DOM.ul({ className: 'my-list' }, React.DOM.li(null, 'Text Content'));
@@ -42,7 +48,9 @@ var root = React.DOM.ul({ className: 'my-list' }, React.DOM.li(null, 'Text Conte
 # 使用 JSX
 利用 `JSX` 编写 DOM 结构，可以用原生的 HTML 标签，也可以直接像普通标签一样引用 React 组件。这两者约定通过大小写来区分，`小写的字符串`是 HTML 标签，`大写开头的变量`是 React 组件。
 
-使用 HTML 标签：
+
+[slide]
+# 使用 HTML 标签
 ```js
 import React from 'react';
 import { render } from 'react-dom';
@@ -52,7 +60,8 @@ render(myDivElement, document.getElementById('mountNode'));
 ```
 > HTML 里的 `class` 在 `JSX` 里要写成 `className`，因为 `class` 在 JS 里是保留关键字。同理某些属性比如 `for` 要写成 `htmlFor`。
 
-使用组件：
+[slide]
+# 使用组件
 ```js
 import React from 'react';
 import { render } from 'react-dom';
@@ -76,7 +85,8 @@ var person = React.createElement(
 );
 ```
 
-子组件也可以作为表达式使用：
+[slide]
+# 子组件也可以作为表达式使用
 ```jsx
 // Input (JSX):
 var content = <Container>{window.isLoggedIn ? <Nav /> : <Login />}</Container>;
@@ -135,7 +145,8 @@ var component = <Component {...props} />;
 ```
 > `props` 对象的属性会被设置成 `Component` 的属性。
 
-属性也可以被覆盖：
+[slide]
+# 属性也可以被覆盖
 ```js
 var props = { foo: 'default' };
 var component = <Component {...props} foo={'override'} />;
